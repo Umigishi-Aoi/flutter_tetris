@@ -2,7 +2,8 @@ import 'dart:ui';
 
 enum TetrisColors {
   grey(color: Color(0xff7f7f7f)),
-  lightBlue(color: Color(0xff7f7f7f)),
+  black(color: Color(0xff000000)),
+  lightBlue(color: Color(0xff00ffff)),
   yellow(color: Color(0xffffff00)),
   purple(color: Color(0xff800080)),
   green(color: Color(0xff00ff00)),
