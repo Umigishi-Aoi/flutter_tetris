@@ -30,10 +30,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  freezed_annotation: ^2.4.1
 
 dev_dependencies:
+  build_runner: ^2.4.6
   flutter_test:
     sdk: flutter
+  freezed: ^2.4.5
   pedantic_mono: ^1.24.0+1
 
 # For information on the generic Dart part of this file, see the
