@@ -71,7 +71,7 @@ class _FieldState extends State<Field> {
           ),
         ),
         ElevatedButton(
-          onPressed: () => addMino(MinoConfig.i, Rotation.r0),
+          onPressed: () => addMino(MinoConfig.getRandomMino(), Rotation.r0),
           child: const Text('add'),
         ),
       ],
@@ -79,6 +79,7 @@ class _FieldState extends State<Field> {
   }
 
   void addMino(MinoConfig config, Rotation rotation) {
+    init();
     final minoPanel = config.getMinoPannel(rotation);
     final minoPanelVerticalLength = minoPanel.length;
     final minoPanelHorizontalLength = minoPanel[0].length;
