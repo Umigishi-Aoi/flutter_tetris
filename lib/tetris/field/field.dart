@@ -24,7 +24,7 @@ class _FieldState extends State<Field> {
   void init() {
     final playField = List.generate(
       verticalBlockNumber,
-      (vertixcalIndex) => List.generate(
+      (verticalIndex) => List.generate(
         horizontalBlockNumber,
         (horizontalIndex) => const PanelModel(
           hasBlock: false,
