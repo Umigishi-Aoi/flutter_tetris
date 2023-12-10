@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_tetris/tetris/config/tetris_colors.dart';
 
 import '../model/panel_model/panel_model.dart';
@@ -164,5 +166,11 @@ enum MinoConfig {
             ],
         },
     };
+  }
+
+  static MinoConfig getRandomMino() {
+    final random = Random();
+
+    return MinoConfig.values[random.nextInt(MinoConfig.values.length)];
   }
 }
