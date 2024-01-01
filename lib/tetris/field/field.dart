@@ -46,9 +46,9 @@ class _FieldState extends State<Field> {
 
     fieldState = fieldWithBottomWall
         .map(
-          (horizontalPannels) => [
+          (horizontalPanels) => [
             wall,
-            ...horizontalPannels,
+            ...horizontalPanels,
             wall,
           ],
         )
