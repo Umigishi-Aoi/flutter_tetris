@@ -80,7 +80,7 @@ class _FieldState extends State<Field> {
 
   void addMino(MinoConfig config, Rotation rotation) {
     init();
-    final minoPanel = config.getMinoPannel(rotation);
+    final minoPanel = config.getMinoPanel(rotation);
     final minoPanelVerticalLength = minoPanel.length;
     final minoPanelHorizontalLength = minoPanel[0].length;
 

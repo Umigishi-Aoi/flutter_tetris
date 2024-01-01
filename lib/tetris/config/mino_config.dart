@@ -14,7 +14,7 @@ enum MinoConfig {
   j,
   l;
 
-  List<List<PanelModel>> getMinoPannel(Rotation r) {
+  List<List<PanelModel>> getMinoPanel(Rotation r) {
     const n = PanelModel(hasBlock: false, color: TetrisColors.black);
     const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
     const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
