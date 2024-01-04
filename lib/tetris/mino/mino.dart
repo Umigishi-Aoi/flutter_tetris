@@ -16,7 +16,7 @@ class Mino extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panels = config.getMinoPannel(rotation);
+    final panels = config.getMinoPanel(rotation);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: panels
