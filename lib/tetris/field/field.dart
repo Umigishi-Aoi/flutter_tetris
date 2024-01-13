@@ -6,7 +6,7 @@ import '../block/block.dart';
 class Field extends StatelessWidget {
   const Field({required this.fieldState, super.key});
 
-  final List<List<PanelModel>> fieldState;
+  final Panels fieldState;
 
   @override
   Widget build(BuildContext context) {
