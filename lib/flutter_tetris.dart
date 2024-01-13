@@ -101,6 +101,23 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                     addMino(MinoConfig.getRandomMino(), Rotation.r0),
                 child: const Text('add'),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Left'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Right'),
+                  ),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Down'),
+              ),
             ],
           ),
         ),
