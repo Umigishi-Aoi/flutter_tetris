@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
+import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
 
 import 'tetris/config/configs.dart';
 import 'tetris/config/tetris_colors.dart';
@@ -16,6 +17,7 @@ class FlutterTetris extends StatefulWidget {
 
 class _FlutterTetrisState extends State<FlutterTetris> {
   late List<List<PanelModel>> fieldState;
+  PositionModel currentPosition = PositionModel.init();
 
   @override
   void initState() {
@@ -62,15 +64,15 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     final minoPanelHorizontalLength = minoPanel[0].length;
 
     final horizontalEndPosition =
-        horizontalStartPosition + minoPanelHorizontalLength + 1;
+        currentPosition.x + minoPanelHorizontalLength + 1;
 
     setState(() {
       fieldState = [
         for (int i = 0; i < minoPanelVerticalLength; i++)
           [
             ...List.generate(
-              horizontalStartPosition + 1,
-              (index) => fieldState[verticalStartPosition + i][index],
+              currentPosition.x + 1,
+              (index) => fieldState[currentPosition.y + i][index],
             ),
             ...minoPanel[i],
             ...List.generate(
