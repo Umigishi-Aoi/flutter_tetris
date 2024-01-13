@@ -181,6 +181,28 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
   }
 
+  void r90() {
+    final tempRotation = currentRotation.rotateR90();
+    final tempPanels = currentMino.getMinoPanel(tempRotation);
+
+    if (set(position: currentPosition, minoPanels: tempPanels)) {
+      set(position: currentPosition, minoPanels: tempPanels);
+      currentRotation = tempRotation;
+      currentMinoPanel = tempPanels;
+    }
+  }
+
+  void l90() {
+    final tempRotation = currentRotation.rotateL90();
+    final tempPanels = currentMino.getMinoPanel(tempRotation);
+
+    if (set(position: currentPosition, minoPanels: tempPanels)) {
+      set(position: currentPosition, minoPanels: tempPanels);
+      currentRotation = tempRotation;
+      currentMinoPanel = tempPanels;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -218,6 +240,19 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ElevatedButton(
                 onPressed: down,
                 child: const Text('Down'),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: l90,
+                    child: const Text('L90'),
+                  ),
+                  ElevatedButton(
+                    onPressed: r90,
+                    child: const Text('R90'),
+                  ),
+                ],
               ),
             ],
           ),
