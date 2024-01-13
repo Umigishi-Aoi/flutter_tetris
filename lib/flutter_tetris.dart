@@ -16,11 +16,11 @@ class FlutterTetris extends StatefulWidget {
 }
 
 class _FlutterTetrisState extends State<FlutterTetris> {
-  late List<List<PanelModel>> fieldState;
+  late Panels fieldState;
   PositionModel currentPosition = PositionModel.init();
   MinoConfig currentMino = MinoConfig.getRandomMino();
   Rotation currentRotation = Rotation.r0;
-  late List<List<PanelModel>> currentMinoPanel;
+  late Panels currentMinoPanel;
 
   @override
   void initState() {
@@ -68,50 +68,18 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     currentPosition = PositionModel.init();
   }
 
-  void set() {
-    removeCurrentMino();
+  bool set({required PositionModel position, required Panels minoPanels}) {
     final minoPanelVerticalLength = currentMinoPanel.length;
     final minoPanelHorizontalLength = currentMinoPanel[0].length;
 
     var tempIndexX = 0;
     var tempIndexY = 0;
 
-    setState(() {
-      fieldState = fieldState.indexed.map((indexedY) {
-        if (indexedY.$1 < currentPosition.y ||
-            indexedY.$1 >= currentPosition.y + minoPanelVerticalLength) {
-          return indexedY.$2;
-        }
-        final panels = indexedY.$2.indexed.map((indexedX) {
-          if (indexedX.$1 < currentPosition.x ||
-              indexedX.$1 >= currentPosition.x + minoPanelHorizontalLength) {
-            return indexedX.$2;
-          }
-          if (!currentMinoPanel[tempIndexY][tempIndexX].hasBlock) {
-            tempIndexX++;
-            return indexedX.$2;
-          }
+    var tempFieldState = fieldState;
 
-          final panel = currentMinoPanel[tempIndexY][tempIndexX];
+    // 現在のMinoの削除処理
 
-          tempIndexX++;
-          return panel;
-        }).toList();
-        tempIndexX = 0;
-        tempIndexY++;
-        return panels;
-      }).toList();
-    });
-  }
-
-  void removeCurrentMino() {
-    final minoPanelVerticalLength = currentMinoPanel.length;
-    final minoPanelHorizontalLength = currentMinoPanel[0].length;
-
-    var tempIndexX = 0;
-    var tempIndexY = 0;
-
-    fieldState = fieldState.indexed.map((indexedY) {
+    tempFieldState = tempFieldState.indexed.map((indexedY) {
       if (indexedY.$1 < currentPosition.y ||
           indexedY.$1 >= currentPosition.y + minoPanelVerticalLength) {
         return indexedY.$2;
@@ -138,6 +106,79 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       tempIndexY++;
       return panels;
     }).toList();
+
+    // 新しいMinoPanel の設定処理
+
+    final newMinoPanelVerticalLength = minoPanels.length;
+    final newMinoPanelHorizontalLength = minoPanels[0].length;
+
+    var setSuccess = true;
+
+    tempIndexX = 0;
+    tempIndexY = 0;
+
+    tempFieldState = tempFieldState.indexed.map((indexedY) {
+      if (indexedY.$1 < position.y ||
+          indexedY.$1 >= position.y + newMinoPanelVerticalLength) {
+        return indexedY.$2;
+      }
+      final panels = indexedY.$2.indexed.map((indexedX) {
+        if (indexedX.$1 < position.x ||
+            indexedX.$1 >= position.x + newMinoPanelHorizontalLength) {
+          return indexedX.$2;
+        }
+        if (!minoPanels[tempIndexY][tempIndexX].hasBlock) {
+          tempIndexX++;
+          return indexedX.$2;
+        }
+
+        if (indexedX.$2.hasBlock) {
+          setSuccess = false;
+        }
+
+        final panel = minoPanels[tempIndexY][tempIndexX];
+
+        tempIndexX++;
+        return panel;
+      }).toList();
+      tempIndexX = 0;
+      tempIndexY++;
+      return panels;
+    }).toList();
+
+    if (!setSuccess) {
+      return setSuccess;
+    }
+
+    setState(() {
+      fieldState = tempFieldState;
+    });
+
+    return setSuccess;
+  }
+
+  void left() {
+    final tempPosition = currentPosition.copyWith(x: currentPosition.x - 1);
+    if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
+      set(position: tempPosition, minoPanels: currentMinoPanel);
+      currentPosition = tempPosition;
+    }
+  }
+
+  void right() {
+    final tempPosition = currentPosition.copyWith(x: currentPosition.x + 1);
+    if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
+      set(position: tempPosition, minoPanels: currentMinoPanel);
+      currentPosition = tempPosition;
+    }
+  }
+
+  void down() {
+    final tempPosition = currentPosition.copyWith(y: currentPosition.y + 1);
+    if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
+      set(position: tempPosition, minoPanels: currentMinoPanel);
+      currentPosition = tempPosition;
+    }
   }
 
   @override
@@ -152,24 +193,30 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 fieldState: fieldState,
               ),
               ElevatedButton(
-                onPressed: set,
+                onPressed: () {
+                  initMino();
+                  set(
+                    position: currentPosition,
+                    minoPanels: currentMinoPanel,
+                  );
+                },
                 child: const Text('add'),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: left,
                     child: const Text('Left'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: right,
                     child: const Text('Right'),
                   ),
                 ],
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: down,
                 child: const Text('Down'),
               ),
             ],
