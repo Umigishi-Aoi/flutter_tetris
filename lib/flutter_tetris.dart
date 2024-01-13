@@ -230,6 +230,13 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  init();
+                  setState(() {});
+                },
+                child: const Text('init'),
+              ),
+              ElevatedButton(
+                onPressed: () {
                   initMino();
                   set(
                     position: currentPosition,
