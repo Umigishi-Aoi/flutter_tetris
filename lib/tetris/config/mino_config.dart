@@ -186,8 +186,8 @@ enum MinoConfig {
 
     return switch (this) {
       i => [
-          [n, n, n, n],
           [pI, pI, pI, pI],
+          [n, n, n, n],
         ],
       o => [
           [n, pO, pO, n],
