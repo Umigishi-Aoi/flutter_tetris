@@ -30,7 +30,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   void init() {
     final playField = List.generate(
-      verticalBlockNumber + 2,
+      verticalBlockNumber,
       (verticalIndex) => List.generate(
         horizontalBlockNumber,
         (horizontalIndex) => const PanelModel(
@@ -69,6 +69,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   bool set({required PositionModel position, required Panels minoPanels}) {
+    if (!checkPosition(position)) {
+      return false;
+    }
+
     final minoPanelVerticalLength = currentMinoPanel.length;
     final minoPanelHorizontalLength = currentMinoPanel[0].length;
 
@@ -201,6 +205,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       currentRotation = tempRotation;
       currentMinoPanel = tempPanels;
     }
+  }
+
+  bool checkPosition(PositionModel position) {
+    if (position.x < 0 || position.x >= horizontalBlockNumber) {
+      return false;
+    }
+    if (position.y < 0 || position.y >= verticalBlockNumber) {
+      return false;
+    }
+    return true;
   }
 
   @override
