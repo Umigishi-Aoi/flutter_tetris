@@ -262,6 +262,14 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 onPressed: down,
                 child: const Text('Down'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  for (var i = 0; i < verticalBlockNumber * 2; i++) {
+                    down();
+                  }
+                },
+                child: const Text('Hard Drop'),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
