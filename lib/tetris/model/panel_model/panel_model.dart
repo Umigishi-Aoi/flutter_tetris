@@ -10,3 +10,5 @@ class PanelModel with _$PanelModel {
     required TetrisColors color,
   }) = _PanelModel;
 }
+
+typedef Panels = List<List<PanelModel>>;
