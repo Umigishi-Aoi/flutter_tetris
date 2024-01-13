@@ -60,12 +60,15 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           ],
         )
         .toList();
+
+    setNextMino();
     initMino();
   }
 
   void initMino() {
+    currentMino = nextMinos.first;
+    nextMinos.removeAt(0);
     setNextMino();
-    currentMino = MinoConfig.getRandomMino();
     currentRotation = Rotation.r0;
     currentMinoPanel = currentMino.getMinoPanel(currentRotation);
     currentPosition = PositionModel.init();
