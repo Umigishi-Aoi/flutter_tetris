@@ -3,6 +3,7 @@ import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
 import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
+import 'package:flutter_tetris/tetris/next_minos/next_minos.dart';
 
 import 'tetris/config/configs.dart';
 import 'tetris/config/tetris_colors.dart';
@@ -21,6 +22,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   MinoConfig currentMino = MinoConfig.getRandomMino();
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
+  List<MinoConfig> nextMinos = [];
 
   @override
   void initState() {
@@ -62,10 +64,23 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void initMino() {
+    setNextMino();
     currentMino = MinoConfig.getRandomMino();
     currentRotation = Rotation.r0;
     currentMinoPanel = currentMino.getMinoPanel(currentRotation);
     currentPosition = PositionModel.init();
+  }
+
+  void setNextMino() {
+    while (nextMinos.length < nextMinoNumber) {
+      final temp = MinoConfig.getRandomMino();
+      if (nextMinos.isEmpty) {
+        nextMinos.add(temp);
+      }
+      if (nextMinos.last != temp) {
+        nextMinos.add(temp);
+      }
+    }
   }
 
   bool set({required PositionModel position, required Panels minoPanels}) {
@@ -225,8 +240,15 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Field(
-                fieldState: fieldState,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Field(
+                    fieldState: fieldState,
+                  ),
+                  NextMinos(configs: nextMinos),
+                ],
               ),
               ElevatedButton(
                 onPressed: () {

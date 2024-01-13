@@ -6,3 +6,5 @@ const panelSize = 24.0;
 
 const verticalStartPosition = 0;
 const horizontalStartPosition = 3;
+
+const nextMinoNumber = 5;

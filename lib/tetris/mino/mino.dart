@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/config/mino_config.dart';
-import 'package:flutter_tetris/tetris/config/rotation.dart';
+import 'package:flutter_tetris/tetris/model/panel_model/panel_model.dart';
 
 import '../block/block.dart';
 
 class Mino extends StatelessWidget {
   const Mino({
     super.key,
-    required this.config,
-    required this.rotation,
+    required this.minoPanel,
   });
 
-  final MinoConfig config;
-  final Rotation rotation;
+  final Panels minoPanel;
 
   @override
   Widget build(BuildContext context) {
-    final panels = config.getMinoPanel(rotation);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: panels
+      children: minoPanel
           .map(
             (horizontalPanels) => Row(
               mainAxisAlignment: MainAxisAlignment.center,
