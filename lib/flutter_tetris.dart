@@ -206,6 +206,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
       lastPosition = currentPosition;
+    } else {
+      add();
     }
   }
 
