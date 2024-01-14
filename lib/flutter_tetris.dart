@@ -27,6 +27,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
   List<MinoConfig> nextMinos = [];
+  late Timer timer;
 
   @override
   void initState() {
@@ -314,6 +315,9 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         minoPanels: currentMinoPanel,
       );
       lastPosition = currentPosition;
+      lastRotation = currentRotation;
+    } else {
+      stop();
     }
   }
 
@@ -332,13 +336,17 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   void start() {
     init();
-    Timer.periodic(
+    timer = Timer.periodic(
       const Duration(
         milliseconds: initialDurationMillisecconds,
       ),
       (timer) => down(),
     );
     setState(() {});
+  }
+
+  void stop() {
+    timer.cancel();
   }
 
   void setTransparent() {
@@ -380,7 +388,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ),
               ElevatedButton(
                 onPressed: start,
-                child: const Text('start'),
+                child: const Text('Start'),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
