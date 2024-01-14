@@ -19,6 +19,7 @@ class FlutterTetris extends StatefulWidget {
 class _FlutterTetrisState extends State<FlutterTetris> {
   late Panels fieldState;
   PositionModel currentPosition = PositionModel.init();
+  PositionModel? lastPosition;
   MinoConfig currentMino = MinoConfig.getRandomMino();
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
@@ -184,6 +185,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
+      lastPosition = currentPosition;
     }
   }
 
@@ -192,6 +194,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
+      lastPosition = currentPosition;
     }
   }
 
@@ -200,6 +203,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
+      lastPosition = currentPosition;
     }
   }
 
@@ -230,6 +234,9 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       return false;
     }
     if (position.y < 0 || position.y >= verticalBlockNumber) {
+      return false;
+    }
+    if (lastPosition == position) {
       return false;
     }
     return true;
@@ -278,10 +285,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ElevatedButton(
                 onPressed: () {
                   initMino();
-                  set(
+                  if (set(
                     position: currentPosition,
                     minoPanels: currentMinoPanel,
-                  );
+                  )) {
+                    set(
+                      position: currentPosition,
+                      minoPanels: currentMinoPanel,
+                    );
+                    lastPosition = currentPosition;
+                  }
                 },
                 child: const Text('add'),
               ),
