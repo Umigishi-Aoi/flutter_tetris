@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
@@ -315,7 +314,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         rotation: tempRotation,
         minoPanels: tempPanels,
       );
-      log(currentPosition.toString());
       currentRotation = tempRotation;
       lastPosition = currentPosition;
       lastRotation = currentRotation;
