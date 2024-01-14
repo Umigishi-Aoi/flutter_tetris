@@ -10,3 +10,5 @@ const horizontalStartPosition = 3;
 const nextMinoNumber = 5;
 
 const notShowMinoVerticalNumber = 3;
+
+const initialDurationMillisecconds = 1000;

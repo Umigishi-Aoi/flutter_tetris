@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
@@ -296,6 +298,12 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ElevatedButton(
                 onPressed: () {
                   init();
+                  Timer.periodic(
+                    const Duration(
+                      milliseconds: initialDurationMillisecconds,
+                    ),
+                    (timer) => down(),
+                  );
                   setState(() {});
                 },
                 child: const Text('init'),
