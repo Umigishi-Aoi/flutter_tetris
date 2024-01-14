@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
@@ -66,6 +67,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         )
         .toList();
     nextMinos.clear();
+    lastPosition = null;
+    lastRotation = null;
     setNextMino();
     initMino();
   }
@@ -260,6 +263,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         );
         currentPosition = tempPosition;
         lastPosition = currentPosition;
+      } else {
+        break;
       }
     }
     down();
@@ -269,6 +274,11 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     final tempRotation = currentRotation.rotateR90();
     final tempPanels = currentMino.getMinoPanel(tempRotation);
 
+    if (currentMino == MinoConfig.t) {
+      tspinSet(rotation: tempRotation, minoPanels: tempPanels);
+      return;
+    }
+
     if (set(
       position: currentPosition,
       rotation: tempRotation,
@@ -280,6 +290,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         minoPanels: tempPanels,
       );
       currentRotation = tempRotation;
+      lastPosition = currentPosition;
+      lastRotation = currentRotation;
       currentMinoPanel = tempPanels;
     }
   }
@@ -288,6 +300,11 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     final tempRotation = currentRotation.rotateL90();
     final tempPanels = currentMino.getMinoPanel(tempRotation);
 
+    if (currentMino == MinoConfig.t) {
+      tspinSet(rotation: tempRotation, minoPanels: tempPanels);
+      return;
+    }
+
     if (set(
       position: currentPosition,
       rotation: tempRotation,
@@ -298,7 +315,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         rotation: tempRotation,
         minoPanels: tempPanels,
       );
+      log(currentPosition.toString());
       currentRotation = tempRotation;
+      lastPosition = currentPosition;
+      lastRotation = currentRotation;
       currentMinoPanel = tempPanels;
     }
   }
@@ -400,6 +420,85 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       }
       return y.$2.map((x) => x.copyWith(isTransparent: false)).toList();
     }).toList();
+  }
+
+  void tspinSet({
+    required Rotation rotation,
+    required Panels minoPanels,
+  }) {
+    //通常の回転でセットできる時
+    if (set(
+      position: currentPosition,
+      rotation: rotation,
+      minoPanels: minoPanels,
+    )) {
+      set(
+        position: currentPosition,
+        rotation: rotation,
+        minoPanels: minoPanels,
+      );
+      currentRotation = rotation;
+      lastPosition = currentPosition;
+      lastRotation = currentRotation;
+      currentMinoPanel = minoPanels;
+      return;
+    }
+
+    int minTempPositionX;
+    int maxTempPositionX;
+
+    int maxTempPositionY;
+
+    if (currentPosition.x - 1 < 0) {
+      minTempPositionX = currentPosition.x;
+    } else {
+      minTempPositionX = currentPosition.x - 1;
+    }
+
+    if (currentPosition.x + 1 >
+        horizontalBlockNumber +
+            2 -
+            MinoConfig.t.getMinoPanel(rotation)[0].length) {
+      maxTempPositionX = currentPosition.x;
+    } else {
+      maxTempPositionX = currentPosition.x + 1;
+    }
+
+    if (currentPosition.y + 2 >
+        verticalBlockNumber + 1 - MinoConfig.t.getMinoPanel(rotation).length) {
+      maxTempPositionY = currentPosition.y + 1;
+    } else if (currentPosition.y + 1 >
+        verticalBlockNumber + 1 - MinoConfig.t.getMinoPanel(rotation).length) {
+      maxTempPositionY = currentPosition.y;
+    } else {
+      maxTempPositionY = currentPosition.y + 2;
+    }
+    for (var i = minTempPositionX; i <= maxTempPositionX; i++) {
+      for (var j = currentPosition.y; j <= maxTempPositionY; j++) {
+        final tempPosition = PositionModel(x: i, y: j);
+        if (tempPosition == currentPosition) {
+          break;
+        }
+
+        if (set(
+          position: tempPosition,
+          rotation: rotation,
+          minoPanels: minoPanels,
+        )) {
+          set(
+            position: tempPosition,
+            rotation: rotation,
+            minoPanels: minoPanels,
+          );
+          currentPosition = tempPosition;
+          currentRotation = rotation;
+          lastPosition = currentPosition;
+          lastRotation = currentRotation;
+          currentMinoPanel = minoPanels;
+          return;
+        }
+      }
+    }
   }
 
   @override
