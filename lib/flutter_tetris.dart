@@ -211,6 +211,18 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
   }
 
+  void hardDrop() {
+    for (var i = 0; i < verticalBlockNumber * 2; i++) {
+      final tempPosition = currentPosition.copyWith(y: currentPosition.y + 1);
+      if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
+        set(position: tempPosition, minoPanels: currentMinoPanel);
+        currentPosition = tempPosition;
+        lastPosition = currentPosition;
+      }
+    }
+    down();
+  }
+
   void r90() {
     final tempRotation = currentRotation.rotateR90();
     final tempPanels = currentMino.getMinoPanel(tempRotation);
@@ -332,11 +344,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 child: const Text('Down'),
               ),
               ElevatedButton(
-                onPressed: () {
-                  for (var i = 0; i < verticalBlockNumber * 2; i++) {
-                    down();
-                  }
-                },
+                onPressed: hardDrop,
                 child: const Text('Hard Drop'),
               ),
               Row(
