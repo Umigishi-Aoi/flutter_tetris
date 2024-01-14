@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PanelModel {
   bool get hasBlock => throw _privateConstructorUsedError;
   TetrisColors get color => throw _privateConstructorUsedError;
+  bool get isTransparent => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PanelModelCopyWith<PanelModel> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $PanelModelCopyWith<$Res> {
           PanelModel value, $Res Function(PanelModel) then) =
       _$PanelModelCopyWithImpl<$Res, PanelModel>;
   @useResult
-  $Res call({bool hasBlock, TetrisColors color});
+  $Res call({bool hasBlock, TetrisColors color, bool isTransparent});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$PanelModelCopyWithImpl<$Res, $Val extends PanelModel>
   $Res call({
     Object? hasBlock = null,
     Object? color = null,
+    Object? isTransparent = null,
   }) {
     return _then(_value.copyWith(
       hasBlock: null == hasBlock
@@ -58,6 +60,10 @@ class _$PanelModelCopyWithImpl<$Res, $Val extends PanelModel>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as TetrisColors,
+      isTransparent: null == isTransparent
+          ? _value.isTransparent
+          : isTransparent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$PanelModelImplCopyWith<$Res>
       __$$PanelModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool hasBlock, TetrisColors color});
+  $Res call({bool hasBlock, TetrisColors color, bool isTransparent});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$PanelModelImplCopyWithImpl<$Res>
   $Res call({
     Object? hasBlock = null,
     Object? color = null,
+    Object? isTransparent = null,
   }) {
     return _then(_$PanelModelImpl(
       hasBlock: null == hasBlock
@@ -96,6 +103,10 @@ class __$$PanelModelImplCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as TetrisColors,
+      isTransparent: null == isTransparent
+          ? _value.isTransparent
+          : isTransparent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -103,16 +114,22 @@ class __$$PanelModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PanelModelImpl implements _PanelModel {
-  const _$PanelModelImpl({required this.hasBlock, required this.color});
+  const _$PanelModelImpl(
+      {required this.hasBlock,
+      required this.color,
+      this.isTransparent = false});
 
   @override
   final bool hasBlock;
   @override
   final TetrisColors color;
+  @override
+  @JsonKey()
+  final bool isTransparent;
 
   @override
   String toString() {
-    return 'PanelModel(hasBlock: $hasBlock, color: $color)';
+    return 'PanelModel(hasBlock: $hasBlock, color: $color, isTransparent: $isTransparent)';
   }
 
   @override
@@ -122,11 +139,13 @@ class _$PanelModelImpl implements _PanelModel {
             other is _$PanelModelImpl &&
             (identical(other.hasBlock, hasBlock) ||
                 other.hasBlock == hasBlock) &&
-            (identical(other.color, color) || other.color == color));
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.isTransparent, isTransparent) ||
+                other.isTransparent == isTransparent));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hasBlock, color);
+  int get hashCode => Object.hash(runtimeType, hasBlock, color, isTransparent);
 
   @JsonKey(ignore: true)
   @override
@@ -138,12 +157,15 @@ class _$PanelModelImpl implements _PanelModel {
 abstract class _PanelModel implements PanelModel {
   const factory _PanelModel(
       {required final bool hasBlock,
-      required final TetrisColors color}) = _$PanelModelImpl;
+      required final TetrisColors color,
+      final bool isTransparent}) = _$PanelModelImpl;
 
   @override
   bool get hasBlock;
   @override
   TetrisColors get color;
+  @override
+  bool get isTransparent;
   @override
   @JsonKey(ignore: true)
   _$$PanelModelImplCopyWith<_$PanelModelImpl> get copyWith =>

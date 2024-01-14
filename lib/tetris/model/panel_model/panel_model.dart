@@ -8,6 +8,7 @@ class PanelModel with _$PanelModel {
   const factory PanelModel({
     required bool hasBlock,
     required TetrisColors color,
+    @Default(false) bool isTransparent,
   }) = _PanelModel;
 }
 
