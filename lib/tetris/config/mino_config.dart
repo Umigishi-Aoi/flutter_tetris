@@ -15,7 +15,7 @@ enum MinoConfig {
   l;
 
   Panels getMinoPanel(Rotation r) {
-    const n = PanelModel(hasBlock: false, color: TetrisColors.transpiarent);
+    const n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
     const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
     const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
     const pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
@@ -33,10 +33,10 @@ enum MinoConfig {
               [n, n, n, n],
             ],
           Rotation.r90 => [
-              [n, n, pI, n],
-              [n, n, pI, n],
-              [n, n, pI, n],
-              [n, n, pI, n],
+              [n, pI, n, n],
+              [n, pI, n, n],
+              [n, pI, n, n],
+              [n, pI, n, n],
             ],
           Rotation.r180 => [
               [n, n, n, n],
@@ -175,7 +175,7 @@ enum MinoConfig {
   }
 
   Panels nextMino() {
-    const n = PanelModel(hasBlock: false, color: TetrisColors.transpiarent);
+    const n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
     const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
     const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
     const pT = PanelModel(hasBlock: true, color: TetrisColors.purple);

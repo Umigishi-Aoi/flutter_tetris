@@ -392,8 +392,18 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     timer.cancel();
   }
 
+  void setTransparent() {
+    fieldState = fieldState.indexed.map((y) {
+      if (y.$1 < notShowMinoVerticalNumber) {
+        return y.$2.map((x) => x.copyWith(isTransparent: true)).toList();
+      }
+      return y.$2.map((x) => x.copyWith(isTransparent: false)).toList();
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    setTransparent();
     return MaterialApp(
       home: Scaffold(
         body: Center(
