@@ -229,6 +229,20 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
   }
 
+  void add() {
+    initMino();
+    if (set(
+      position: currentPosition,
+      minoPanels: currentMinoPanel,
+    )) {
+      set(
+        position: currentPosition,
+        minoPanels: currentMinoPanel,
+      );
+      lastPosition = currentPosition;
+    }
+  }
+
   bool checkPosition(PositionModel position) {
     if (position.x < 0 || position.x >= horizontalBlockNumber) {
       return false;
@@ -242,8 +256,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     return true;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void setTransparent() {
     fieldState = fieldState.indexed.map((y) {
       if (y.$1 < notShowMinoVerticalNumber) {
         return y.$2
@@ -252,6 +265,11 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       }
       return y.$2;
     }).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    setTransparent();
     return MaterialApp(
       home: Scaffold(
         body: Center(
@@ -283,19 +301,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 child: const Text('init'),
               ),
               ElevatedButton(
-                onPressed: () {
-                  initMino();
-                  if (set(
-                    position: currentPosition,
-                    minoPanels: currentMinoPanel,
-                  )) {
-                    set(
-                      position: currentPosition,
-                      minoPanels: currentMinoPanel,
-                    );
-                    lastPosition = currentPosition;
-                  }
-                },
+                onPressed: add,
                 child: const Text('add'),
               ),
               Row(
