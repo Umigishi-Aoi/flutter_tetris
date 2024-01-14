@@ -3,6 +3,7 @@ import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
 import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
+import 'package:flutter_tetris/tetris/next_minos/next_minos.dart';
 
 import 'tetris/config/configs.dart';
 import 'tetris/config/tetris_colors.dart';
@@ -18,9 +19,11 @@ class FlutterTetris extends StatefulWidget {
 class _FlutterTetrisState extends State<FlutterTetris> {
   late Panels fieldState;
   PositionModel currentPosition = PositionModel.init();
+  PositionModel? lastPosition;
   MinoConfig currentMino = MinoConfig.getRandomMino();
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
+  List<MinoConfig> nextMinos = [];
 
   @override
   void initState() {
@@ -58,14 +61,30 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           ],
         )
         .toList();
+
+    setNextMino();
     initMino();
   }
 
   void initMino() {
-    currentMino = MinoConfig.getRandomMino();
+    currentMino = nextMinos.first;
+    nextMinos.removeAt(0);
+    setNextMino();
     currentRotation = Rotation.r0;
     currentMinoPanel = currentMino.getMinoPanel(currentRotation);
     currentPosition = PositionModel.init();
+  }
+
+  void setNextMino() {
+    while (nextMinos.length < nextMinoNumber) {
+      final temp = MinoConfig.getRandomMino();
+      if (nextMinos.isEmpty) {
+        nextMinos.add(temp);
+      }
+      if (nextMinos.last != temp) {
+        nextMinos.add(temp);
+      }
+    }
   }
 
   bool set({required PositionModel position, required Panels minoPanels}) {
@@ -166,6 +185,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
+      lastPosition = currentPosition;
     }
   }
 
@@ -174,6 +194,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
+      lastPosition = currentPosition;
     }
   }
 
@@ -182,6 +203,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
       set(position: tempPosition, minoPanels: currentMinoPanel);
       currentPosition = tempPosition;
+      lastPosition = currentPosition;
     }
   }
 
@@ -214,19 +236,44 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     if (position.y < 0 || position.y >= verticalBlockNumber) {
       return false;
     }
+    if (lastPosition == position) {
+      return false;
+    }
     return true;
   }
 
   @override
   Widget build(BuildContext context) {
+    fieldState = fieldState.indexed.map((y) {
+      if (y.$1 < notShowMinoVerticalNumber) {
+        return y.$2
+            .map((x) => x.copyWith(color: TetrisColors.transpiarent))
+            .toList();
+      }
+      return y.$2;
+    }).toList();
     return MaterialApp(
       home: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Field(
-                fieldState: fieldState,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Field(
+                    fieldState: fieldState,
+                  ),
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: panelSize * notShowMinoVerticalNumber,
+                      ),
+                      NextMinos(configs: nextMinos),
+                    ],
+                  ),
+                ],
               ),
               ElevatedButton(
                 onPressed: () {
@@ -238,10 +285,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ElevatedButton(
                 onPressed: () {
                   initMino();
-                  set(
+                  if (set(
                     position: currentPosition,
                     minoPanels: currentMinoPanel,
-                  );
+                  )) {
+                    set(
+                      position: currentPosition,
+                      minoPanels: currentMinoPanel,
+                    );
+                    lastPosition = currentPosition;
+                  }
                 },
                 child: const Text('add'),
               ),

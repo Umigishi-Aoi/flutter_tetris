@@ -15,7 +15,7 @@ enum MinoConfig {
   l;
 
   Panels getMinoPanel(Rotation r) {
-    const n = PanelModel(hasBlock: false, color: TetrisColors.black);
+    const n = PanelModel(hasBlock: false, color: TetrisColors.transpiarent);
     const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
     const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
     const pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
@@ -172,5 +172,47 @@ enum MinoConfig {
     final random = Random();
 
     return MinoConfig.values[random.nextInt(MinoConfig.values.length)];
+  }
+
+  Panels nextMino() {
+    const n = PanelModel(hasBlock: false, color: TetrisColors.transpiarent);
+    const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
+    const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
+    const pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
+    const pS = PanelModel(hasBlock: true, color: TetrisColors.green);
+    const pZ = PanelModel(hasBlock: true, color: TetrisColors.red);
+    const pJ = PanelModel(hasBlock: true, color: TetrisColors.blue);
+    const pL = PanelModel(hasBlock: true, color: TetrisColors.orange);
+
+    return switch (this) {
+      i => [
+          [pI, pI, pI, pI],
+          [n, n, n, n],
+        ],
+      o => [
+          [n, pO, pO, n],
+          [n, pO, pO, n],
+        ],
+      t => [
+          [n, pT, n, n],
+          [pT, pT, pT, n],
+        ],
+      s => [
+          [n, pS, pS, n],
+          [pS, pS, n, n],
+        ],
+      z => [
+          [pZ, pZ, n, n],
+          [n, pZ, pZ, n],
+        ],
+      j => [
+          [pJ, n, n, n],
+          [pJ, pJ, pJ, n],
+        ],
+      l => [
+          [n, n, pL, n],
+          [pL, pL, pL, n],
+        ],
+    };
   }
 }
