@@ -240,6 +240,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       currentPosition = tempPosition;
       lastPosition = currentPosition;
     } else {
+      deletePanels();
       add();
     }
   }
@@ -334,6 +335,48 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     return true;
   }
 
+  void deletePanels() {
+    final canDeleteIndexes = <int>[];
+
+    for (final indexed in fieldState.indexed) {
+      var canDelete = true;
+      if (indexed.$1 == verticalBlockNumber) {
+        canDelete = false;
+      }
+      for (final panel in indexed.$2) {
+        if (!panel.hasBlock) {
+          canDelete = false;
+        }
+      }
+      if (canDelete) {
+        canDeleteIndexes.add(indexed.$1);
+      }
+    }
+
+    canDeleteIndexes.forEach(fieldState.removeAt);
+
+    const wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
+
+    final newHorizontalPanel = [
+      wall,
+      ...List.generate(
+        horizontalBlockNumber,
+        (index) => const PanelModel(hasBlock: false, color: TetrisColors.black),
+      ),
+      wall,
+    ];
+
+    setState(() {
+      fieldState = [
+        ...List.generate(
+          canDeleteIndexes.length,
+          (index) => newHorizontalPanel,
+        ),
+        ...fieldState,
+      ];
+    });
+  }
+
   void start() {
     init();
     timer = Timer.periodic(
@@ -349,20 +392,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     timer.cancel();
   }
 
-  void setTransparent() {
-    fieldState = fieldState.indexed.map((y) {
-      if (y.$1 < notShowMinoVerticalNumber) {
-        return y.$2
-            .map((x) => x.copyWith(color: TetrisColors.transpiarent))
-            .toList();
-      }
-      return y.$2;
-    }).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
-    setTransparent();
     return MaterialApp(
       home: Scaffold(
         body: Center(
