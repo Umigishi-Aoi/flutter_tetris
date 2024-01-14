@@ -324,10 +324,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 onPressed: start,
                 child: const Text('start'),
               ),
-              ElevatedButton(
-                onPressed: add,
-                child: const Text('add'),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
