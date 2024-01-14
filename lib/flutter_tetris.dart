@@ -27,7 +27,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
   List<MinoConfig> nextMinos = [];
-  late Timer timer;
+  Timer timer = Timer.periodic(const Duration(seconds: 10000), (timer) {});
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           ],
         )
         .toList();
-
+    nextMinos.clear();
     setNextMino();
     initMino();
   }
@@ -378,6 +378,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void start() {
+    timer.cancel();
     init();
     timer = Timer.periodic(
       const Duration(
