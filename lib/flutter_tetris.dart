@@ -359,19 +359,21 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     for (final indexed in fieldState.indexed) {
       var canDelete = true;
       if (indexed.$1 == verticalBlockNumber) {
-        canDelete = false;
+        break;
       }
       for (final panel in indexed.$2) {
         if (!panel.hasBlock) {
           canDelete = false;
+          break;
         }
       }
       if (canDelete) {
         canDeleteIndexes.add(indexed.$1);
       }
     }
-
-    canDeleteIndexes.forEach(fieldState.removeAt);
+    final tempFieldState = fieldState.indexed.toList()
+      ..removeWhere((element) => canDeleteIndexes.contains(element.$1));
+    fieldState = tempFieldState.map((e) => e.$2).toList();
 
     const wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
 
