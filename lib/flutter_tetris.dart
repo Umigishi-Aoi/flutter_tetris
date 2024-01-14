@@ -22,6 +22,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   late Panels fieldState;
   PositionModel currentPosition = PositionModel.init();
   PositionModel? lastPosition;
+  Rotation? lastRotation;
   MinoConfig currentMino = MinoConfig.getRandomMino();
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
@@ -89,8 +90,15 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
   }
 
-  bool set({required PositionModel position, required Panels minoPanels}) {
-    if (!checkPosition(position)) {
+  bool set({
+    required PositionModel position,
+    required Rotation rotation,
+    required Panels minoPanels,
+  }) {
+    if (!checkState(
+      position,
+      rotation,
+    )) {
       return false;
     }
 
@@ -184,8 +192,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   void left() {
     final tempPosition = currentPosition.copyWith(x: currentPosition.x - 1);
-    if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
-      set(position: tempPosition, minoPanels: currentMinoPanel);
+    if (set(
+      position: tempPosition,
+      rotation: currentRotation,
+      minoPanels: currentMinoPanel,
+    )) {
+      set(
+        position: tempPosition,
+        rotation: currentRotation,
+        minoPanels: currentMinoPanel,
+      );
       currentPosition = tempPosition;
       lastPosition = currentPosition;
     }
@@ -193,8 +209,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   void right() {
     final tempPosition = currentPosition.copyWith(x: currentPosition.x + 1);
-    if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
-      set(position: tempPosition, minoPanels: currentMinoPanel);
+    if (set(
+      position: tempPosition,
+      rotation: currentRotation,
+      minoPanels: currentMinoPanel,
+    )) {
+      set(
+        position: tempPosition,
+        rotation: currentRotation,
+        minoPanels: currentMinoPanel,
+      );
       currentPosition = tempPosition;
       lastPosition = currentPosition;
     }
@@ -202,8 +226,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   void down() {
     final tempPosition = currentPosition.copyWith(y: currentPosition.y + 1);
-    if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
-      set(position: tempPosition, minoPanels: currentMinoPanel);
+    if (set(
+      position: tempPosition,
+      rotation: currentRotation,
+      minoPanels: currentMinoPanel,
+    )) {
+      set(
+        position: tempPosition,
+        rotation: currentRotation,
+        minoPanels: currentMinoPanel,
+      );
       currentPosition = tempPosition;
       lastPosition = currentPosition;
     } else {
@@ -214,8 +246,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   void hardDrop() {
     for (var i = 0; i < verticalBlockNumber * 2; i++) {
       final tempPosition = currentPosition.copyWith(y: currentPosition.y + 1);
-      if (set(position: tempPosition, minoPanels: currentMinoPanel)) {
-        set(position: tempPosition, minoPanels: currentMinoPanel);
+      if (set(
+        position: tempPosition,
+        rotation: currentRotation,
+        minoPanels: currentMinoPanel,
+      )) {
+        set(
+          position: tempPosition,
+          rotation: currentRotation,
+          minoPanels: currentMinoPanel,
+        );
         currentPosition = tempPosition;
         lastPosition = currentPosition;
       }
@@ -227,8 +267,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     final tempRotation = currentRotation.rotateR90();
     final tempPanels = currentMino.getMinoPanel(tempRotation);
 
-    if (set(position: currentPosition, minoPanels: tempPanels)) {
-      set(position: currentPosition, minoPanels: tempPanels);
+    if (set(
+      position: currentPosition,
+      rotation: tempRotation,
+      minoPanels: tempPanels,
+    )) {
+      set(
+        position: currentPosition,
+        rotation: tempRotation,
+        minoPanels: tempPanels,
+      );
       currentRotation = tempRotation;
       currentMinoPanel = tempPanels;
     }
@@ -238,8 +286,16 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     final tempRotation = currentRotation.rotateL90();
     final tempPanels = currentMino.getMinoPanel(tempRotation);
 
-    if (set(position: currentPosition, minoPanels: tempPanels)) {
-      set(position: currentPosition, minoPanels: tempPanels);
+    if (set(
+      position: currentPosition,
+      rotation: tempRotation,
+      minoPanels: tempPanels,
+    )) {
+      set(
+        position: currentPosition,
+        rotation: tempRotation,
+        minoPanels: tempPanels,
+      );
       currentRotation = tempRotation;
       currentMinoPanel = tempPanels;
     }
@@ -249,24 +305,26 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     initMino();
     if (set(
       position: currentPosition,
+      rotation: currentRotation,
       minoPanels: currentMinoPanel,
     )) {
       set(
         position: currentPosition,
+        rotation: currentRotation,
         minoPanels: currentMinoPanel,
       );
       lastPosition = currentPosition;
     }
   }
 
-  bool checkPosition(PositionModel position) {
+  bool checkState(PositionModel position, Rotation rotation) {
     if (position.x < 0 || position.x >= horizontalBlockNumber) {
       return false;
     }
     if (position.y < 0 || position.y >= verticalBlockNumber) {
       return false;
     }
-    if (lastPosition == position) {
+    if (lastPosition == position && lastRotation == rotation) {
       return false;
     }
     return true;
