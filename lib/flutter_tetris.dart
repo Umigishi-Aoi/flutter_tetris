@@ -272,6 +272,17 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     return true;
   }
 
+  void start() {
+    init();
+    Timer.periodic(
+      const Duration(
+        milliseconds: initialDurationMillisecconds,
+      ),
+      (timer) => down(),
+    );
+    setState(() {});
+  }
+
   void setTransparent() {
     fieldState = fieldState.indexed.map((y) {
       if (y.$1 < notShowMinoVerticalNumber) {
@@ -310,17 +321,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 ],
               ),
               ElevatedButton(
-                onPressed: () {
-                  init();
-                  Timer.periodic(
-                    const Duration(
-                      milliseconds: initialDurationMillisecconds,
-                    ),
-                    (timer) => down(),
-                  );
-                  setState(() {});
-                },
-                child: const Text('init'),
+                onPressed: start,
+                child: const Text('start'),
               ),
               ElevatedButton(
                 onPressed: add,
