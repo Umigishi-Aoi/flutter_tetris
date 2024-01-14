@@ -237,6 +237,14 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   @override
   Widget build(BuildContext context) {
+    fieldState = fieldState.indexed.map((y) {
+      if (y.$1 < notShowMinoVerticalNumber) {
+        return y.$2
+            .map((x) => x.copyWith(color: TetrisColors.transpiarent))
+            .toList();
+      }
+      return y.$2;
+    }).toList();
     return MaterialApp(
       home: Scaffold(
         body: Center(
@@ -250,7 +258,14 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                   Field(
                     fieldState: fieldState,
                   ),
-                  NextMinos(configs: nextMinos),
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: panelSize * notShowMinoVerticalNumber,
+                      ),
+                      NextMinos(configs: nextMinos),
+                    ],
+                  ),
                 ],
               ),
               ElevatedButton(
