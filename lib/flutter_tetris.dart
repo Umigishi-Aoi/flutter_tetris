@@ -34,6 +34,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   Timer timer = Timer.periodic(const Duration(seconds: 10000), (timer) {});
   bool isKept = false;
   int score = 0;
+  bool isTspin = false;
 
   @override
   void initState() {
@@ -78,6 +79,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     keepMino = null;
     isKept = false;
     score = 0;
+    isTspin = false;
     initMino();
   }
 
@@ -253,8 +255,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       );
       currentPosition = tempPosition;
       lastPosition = currentPosition;
+      isTspin = false;
     } else {
       deletePanels();
+      isTspin = false;
       add();
     }
   }
@@ -402,6 +406,9 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       wall,
     ];
 
+    score += (canDeleteIndexes.length) * (canDeleteIndexes.length) * scoreUnit;
+    score *= isTspin ? tspinBonus : 1;
+
     setState(() {
       fieldState = [
         ...List.generate(
@@ -410,7 +417,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         ),
         ...fieldState,
       ];
-      score += (canDeleteIndexes.length) * (canDeleteIndexes.length) * 100;
     });
   }
 
@@ -458,6 +464,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       lastPosition = currentPosition;
       lastRotation = currentRotation;
       currentMinoPanel = minoPanels;
+      isTspin = true;
       return;
     }
 
@@ -512,6 +519,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           lastPosition = currentPosition;
           lastRotation = currentRotation;
           currentMinoPanel = minoPanels;
+          isTspin = true;
           return;
         }
       }
