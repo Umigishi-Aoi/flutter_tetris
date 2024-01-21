@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
+import 'package:flutter_tetris/tetris/keep_mino/keep_mino.dart';
 import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
 import 'package:flutter_tetris/tetris/next_minos/next_minos.dart';
 
@@ -27,7 +29,9 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   Rotation currentRotation = Rotation.r0;
   late Panels currentMinoPanel;
   List<MinoConfig> nextMinos = [];
+  MinoConfig? keepMino;
   Timer timer = Timer.periodic(const Duration(seconds: 10000), (timer) {});
+  bool isKept = false;
 
   @override
   void initState() {
@@ -69,6 +73,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     lastPosition = null;
     lastRotation = null;
     setNextMino();
+    keepMino = null;
+    isKept = false;
     initMino();
   }
 
@@ -79,6 +85,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     currentRotation = Rotation.r0;
     currentMinoPanel = currentMino.getMinoPanel(currentRotation);
     currentPosition = PositionModel.init();
+    isKept = false;
   }
 
   void setNextMino() {
@@ -97,10 +104,12 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     required PositionModel position,
     required Rotation rotation,
     required Panels minoPanels,
+    bool? isKeep = false,
   }) {
     if (!checkState(
-      position,
-      rotation,
+      position: position,
+      rotation: rotation,
+      isKeep: isKeep!,
     )) {
       return false;
     }
@@ -340,14 +349,18 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
   }
 
-  bool checkState(PositionModel position, Rotation rotation) {
+  bool checkState({
+    required PositionModel position,
+    required Rotation rotation,
+    required bool isKeep,
+  }) {
     if (position.x < 0 || position.x >= horizontalBlockNumber) {
       return false;
     }
     if (position.y < 0 || position.y >= verticalBlockNumber) {
       return false;
     }
-    if (lastPosition == position && lastRotation == rotation) {
+    if (lastPosition == position && lastRotation == rotation && !isKeep) {
       return false;
     }
     return true;
@@ -501,6 +514,53 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
   }
 
+  void keep() {
+    if (isKept) {
+      return;
+    }
+    isKept = true;
+    if (keepMino != null) {
+      log('aaa');
+      if (set(
+        position: currentPosition,
+        rotation: Rotation.r0,
+        minoPanels: keepMino!.getMinoPanel(Rotation.r0),
+        isKeep: true,
+      )) {
+        log('bbb');
+        final tempMino = keepMino;
+        keepMino = currentMino;
+        currentMino = tempMino!;
+        currentMinoPanel = currentMino.getMinoPanel(Rotation.r0);
+        set(
+          position: currentPosition,
+          rotation: Rotation.r0,
+          minoPanels: currentMinoPanel,
+          isKeep: true,
+        );
+      }
+    } else {
+      if (set(
+        position: currentPosition,
+        rotation: Rotation.r0,
+        minoPanels: nextMinos.first.getMinoPanel(Rotation.r0),
+        isKeep: true,
+      )) {
+        keepMino = currentMino;
+        currentMino = nextMinos.first;
+        nextMinos.removeAt(0);
+        setNextMino();
+        currentMinoPanel = currentMino.getMinoPanel(Rotation.r0);
+        set(
+          position: currentPosition,
+          rotation: Rotation.r0,
+          minoPanels: currentMinoPanel,
+          isKeep: true,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     setTransparent();
@@ -514,6 +574,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  KeepMino(config: keepMino),
                   Field(
                     fieldState: fieldState,
                   ),
@@ -530,6 +591,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
               ElevatedButton(
                 onPressed: start,
                 child: const Text('Start'),
+              ),
+              ElevatedButton(
+                onPressed: keep,
+                child: const Text('Keep'),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
