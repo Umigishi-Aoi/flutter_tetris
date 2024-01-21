@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/keyboard_input/keyboard_input_widget.dart';
+import 'package:flutter_tetris/tetris/keyboard_input/keyboard_input_widget.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
