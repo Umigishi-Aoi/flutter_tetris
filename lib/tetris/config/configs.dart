@@ -14,3 +14,7 @@ const notShowMinoVerticalNumber = 3;
 const initialDurationMillisecconds = 1000;
 
 const scoreHeight = 80.0;
+
+const scoreUnit = 100;
+
+const tspinBonus = 3;
