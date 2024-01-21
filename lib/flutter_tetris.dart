@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/keyboard_input/keyboard_input_widget.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
 import 'package:flutter_tetris/tetris/keep_mino/keep_mino.dart';
+import 'package:flutter_tetris/tetris/keyboard_input/keyboard_input_widget.dart';
 import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
 import 'package:flutter_tetris/tetris/next_minos/next_minos.dart';
 import 'package:flutter_tetris/tetris/score/score.dart';

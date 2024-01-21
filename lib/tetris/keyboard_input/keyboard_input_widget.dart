@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_tetris/keyboard_input/actions.dart';
-import 'package:flutter_tetris/keyboard_input/intents.dart';
+import 'package:flutter_tetris/tetris/keyboard_input/actions.dart';
+import 'package:flutter_tetris/tetris/keyboard_input/intents.dart';
 
 class KeyboardInputWidget extends StatelessWidget {
   const KeyboardInputWidget({
@@ -32,12 +32,12 @@ class KeyboardInputWidget extends StatelessWidget {
     return Shortcuts(
       shortcuts: <LogicalKeySet, Intent>{
         LogicalKeySet(LogicalKeyboardKey.enter): const StartIntent(),
-        LogicalKeySet(LogicalKeyboardKey.keyD): const RightIntent(),
-        LogicalKeySet(LogicalKeyboardKey.keyA): const LeftIntent(),
-        LogicalKeySet(LogicalKeyboardKey.keyS): const DownIntent(),
-        LogicalKeySet(LogicalKeyboardKey.keyL): const R90Intent(),
-        LogicalKeySet(LogicalKeyboardKey.keyJ): const L90Intent(),
-        LogicalKeySet(LogicalKeyboardKey.keyK): const KeepIntent(),
+        LogicalKeySet(LogicalKeyboardKey.arrowRight): const RightIntent(),
+        LogicalKeySet(LogicalKeyboardKey.arrowLeft): const LeftIntent(),
+        LogicalKeySet(LogicalKeyboardKey.arrowDown): const DownIntent(),
+        LogicalKeySet(LogicalKeyboardKey.keyX): const R90Intent(),
+        LogicalKeySet(LogicalKeyboardKey.keyZ): const L90Intent(),
+        LogicalKeySet(LogicalKeyboardKey.keyC): const KeepIntent(),
         LogicalKeySet(LogicalKeyboardKey.space): const HardDropIntent(),
       },
       child: Actions(
