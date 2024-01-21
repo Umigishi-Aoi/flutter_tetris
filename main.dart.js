@@ -16828,6 +16828,7 @@ _.Q=null
 _.as=e
 _.at=!1
 _.ax=0
+_.ay=!1
 _.a=null
 _.b=f
 _.c=null},
@@ -47917,6 +47918,7 @@ m.ph()
 m.Q=null
 m.at=!1
 m.ax=0
+m.ay=!1
 m.BQ()},
 BQ(){var s=this,r=s.z
 s.w=B.b.gI(r)
@@ -47976,7 +47978,9 @@ s=r.y
 s===$&&A.e()
 if(r.bY(s,p,q)){q=r.x
 r.bY(r.y,p,q)
-r.f=r.e=p}else{r.P9()
+r.f=r.e=p
+r.ay=!1}else{r.P9()
+r.ay=!1
 r.BQ()
 q=r.e
 s=r.x
@@ -48037,6 +48041,11 @@ k=J.of(8,t.s3)
 for(j=0;j<8;++j)k[j]=B.fN
 B.b.F(g,k)
 g.push(B.cD)
+s=i.ax
+r=h.length
+r=s+r*r*100
+i.ax=r
+i.ax=r*(i.ay?3:1)
 i.an(new A.RU(i,h,g))},
 k9(){var s=this
 s.as.bD()
@@ -48055,6 +48064,7 @@ j.x=b
 j.f=j.e
 j.r=b
 j.y=a
+j.ay=!0
 return}s=j.e.gcR()
 r=j.e
 q=s-1<0?r.gcR():r.gcR()-1
@@ -48074,6 +48084,7 @@ j.x=b
 j.f=k
 j.r=b
 j.y=a
+j.ay=!0
 return}}},
 RF(){var s,r,q,p=this
 if(p.at)return
@@ -48176,16 +48187,13 @@ A.RT.prototype={
 $1(a){return a.b},
 $S:35}
 A.RU.prototype={
-$0(){var s,r,q=this.a,p=this.b,o=p.length,n=t.th,m=J.of(o,n)
-for(s=this.c,r=0;r<o;++r)m[r]=s
-n=A.M(m,!0,n)
+$0(){var s,r,q=this.a,p=this.b.length,o=t.th,n=J.of(p,o)
+for(s=this.c,r=0;r<p;++r)n[r]=s
+o=A.M(n,!0,o)
 s=q.d
 s===$&&A.e()
-B.b.F(n,s)
-q.d=n
-n=q.ax
-p=p.length
-q.ax=n+p*p*100},
+B.b.F(o,s)
+q.d=o},
 $S:0}
 A.S3.prototype={
 $1(a){return this.a.tb()},
