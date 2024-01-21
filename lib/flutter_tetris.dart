@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tetris/keyboard_input/keyboard_input_widget.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
 import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
@@ -565,72 +566,82 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   Widget build(BuildContext context) {
     setTransparent();
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  KeepMino(config: keepMino),
-                  Field(
-                    fieldState: fieldState,
-                  ),
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: panelSize * notShowMinoVerticalNumber,
-                      ),
-                      NextMinos(configs: nextMinos),
-                    ],
-                  ),
-                ],
-              ),
-              ElevatedButton(
-                onPressed: start,
-                child: const Text('Start'),
-              ),
-              ElevatedButton(
-                onPressed: keep,
-                child: const Text('Keep'),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: left,
-                    child: const Text('Left'),
-                  ),
-                  ElevatedButton(
-                    onPressed: right,
-                    child: const Text('Right'),
-                  ),
-                ],
-              ),
-              ElevatedButton(
-                onPressed: down,
-                child: const Text('Down'),
-              ),
-              ElevatedButton(
-                onPressed: hardDrop,
-                child: const Text('Hard Drop'),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: l90,
-                    child: const Text('L90'),
-                  ),
-                  ElevatedButton(
-                    onPressed: r90,
-                    child: const Text('R90'),
-                  ),
-                ],
-              ),
-            ],
+      home: KeyboardInputWidget(
+        start: start,
+        right: right,
+        left: left,
+        down: down,
+        r90: r90,
+        l90: l90,
+        keep: keep,
+        hardDrop: hardDrop,
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    KeepMino(config: keepMino),
+                    Field(
+                      fieldState: fieldState,
+                    ),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: panelSize * notShowMinoVerticalNumber,
+                        ),
+                        NextMinos(configs: nextMinos),
+                      ],
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: start,
+                  child: const Text('Start'),
+                ),
+                ElevatedButton(
+                  onPressed: keep,
+                  child: const Text('Keep'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: left,
+                      child: const Text('Left'),
+                    ),
+                    ElevatedButton(
+                      onPressed: right,
+                      child: const Text('Right'),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: down,
+                  child: const Text('Down'),
+                ),
+                ElevatedButton(
+                  onPressed: hardDrop,
+                  child: const Text('Hard Drop'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: l90,
+                      child: const Text('L90'),
+                    ),
+                    ElevatedButton(
+                      onPressed: r90,
+                      child: const Text('R90'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
