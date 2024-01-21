@@ -9,6 +9,7 @@ import 'package:flutter_tetris/tetris/field/field.dart';
 import 'package:flutter_tetris/tetris/keep_mino/keep_mino.dart';
 import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
 import 'package:flutter_tetris/tetris/next_minos/next_minos.dart';
+import 'package:flutter_tetris/tetris/score/score.dart';
 
 import 'tetris/config/configs.dart';
 import 'tetris/config/tetris_colors.dart';
@@ -33,6 +34,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   MinoConfig? keepMino;
   Timer timer = Timer.periodic(const Duration(seconds: 10000), (timer) {});
   bool isKept = false;
+  int score = 0;
 
   @override
   void initState() {
@@ -76,6 +78,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     setNextMino();
     keepMino = null;
     isKept = false;
+    score = 0;
     initMino();
   }
 
@@ -408,6 +411,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         ),
         ...fieldState,
       ];
+      score += (canDeleteIndexes.length) * (canDeleteIndexes.length) * 100;
     });
   }
 
@@ -580,6 +584,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Score(score: score),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
