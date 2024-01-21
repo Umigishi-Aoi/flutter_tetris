@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/keyboard_input/keyboard_input_widget.dart';
@@ -525,14 +524,12 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     }
     isKept = true;
     if (keepMino != null) {
-      log('aaa');
       if (set(
         position: currentPosition,
         rotation: Rotation.r0,
         minoPanels: keepMino!.getMinoPanel(Rotation.r0),
         isKeep: true,
       )) {
-        log('bbb');
         final tempMino = keepMino;
         keepMino = currentMino;
         currentMino = tempMino!;
