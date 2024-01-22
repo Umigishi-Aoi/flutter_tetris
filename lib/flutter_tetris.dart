@@ -406,8 +406,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       wall,
     ];
 
-    score += (canDeleteIndexes.length) * (canDeleteIndexes.length) * scoreUnit;
-    score *= isTspin ? tspinBonus : 1;
+    score += (canDeleteIndexes.length) *
+        (canDeleteIndexes.length) *
+        scoreUnit *
+        (isTspin ? tspinBonus : 1);
 
     setState(() {
       fieldState = [
