@@ -48043,9 +48043,8 @@ B.b.F(g,k)
 g.push(B.cD)
 s=i.ax
 r=h.length
-r=s+r*r*100
-i.ax=r
-i.ax=r*(i.ay?3:1)
+q=i.ay?3:1
+i.ax=s+r*r*100*q
 i.an(new A.RU(i,h,g))},
 k9(){var s=this
 s.as.bD()
