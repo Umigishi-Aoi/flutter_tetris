@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/config/configs.dart';
-import 'package:flutter_tetris/tetris/config/tetris_colors.dart';
 
+import '../configs.dart';
+import '../model/enum/tetris_colors.dart';
 import '../model/panel_model.dart';
 
 class Block extends StatelessWidget {

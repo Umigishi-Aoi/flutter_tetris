@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/config/mino_config.dart';
-import 'package:flutter_tetris/tetris/widgets/mino.dart';
 
-import '../config/configs.dart';
+import '../configs.dart';
+import '../model/enum/mino_config.dart';
+import 'mino.dart';
 
 class KeepMino extends StatelessWidget {
   const KeepMino({required this.config, super.key});

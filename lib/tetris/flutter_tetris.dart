@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/config/mino_config.dart';
-import 'package:flutter_tetris/tetris/config/rotation.dart';
-import 'package:flutter_tetris/tetris/feature/keyboard_input/widgets/keyboard_input_widget.dart';
-import 'package:flutter_tetris/tetris/model/position_model.dart';
-import 'package:flutter_tetris/tetris/widgets/field.dart';
-import 'package:flutter_tetris/tetris/widgets/keep_mino.dart';
-import 'package:flutter_tetris/tetris/widgets/next_minos.dart';
-import 'package:flutter_tetris/tetris/widgets/score.dart';
 
-import 'config/configs.dart';
-import 'config/tetris_colors.dart';
+import 'configs.dart';
+import 'feature/keyboard_input/widgets/keyboard_input_widget.dart';
+import 'model/enum/mino_config.dart';
+import 'model/enum/rotation.dart';
+import 'model/enum/tetris_colors.dart';
 import 'model/panel_model.dart';
+import 'model/position_model.dart';
+import 'widgets/field.dart';
+import 'widgets/keep_mino.dart';
+import 'widgets/next_minos.dart';
+import 'widgets/score.dart';
 
 class FlutterTetris extends StatefulWidget {
   const FlutterTetris({super.key});
