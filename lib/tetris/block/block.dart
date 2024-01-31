@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/configs.dart';
 import 'package:flutter_tetris/tetris/config/tetris_colors.dart';
 
-import '../model/panel_model/panel_model.dart';
+import '../model/panel_model.dart';
 
 class Block extends StatelessWidget {
   const Block({super.key, required this.panel});
