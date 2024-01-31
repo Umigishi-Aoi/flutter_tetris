@@ -6,13 +6,13 @@ import 'package:flutter_tetris/tetris/config/rotation.dart';
 import 'package:flutter_tetris/tetris/field/field.dart';
 import 'package:flutter_tetris/tetris/keep_mino/keep_mino.dart';
 import 'package:flutter_tetris/tetris/keyboard_input/keyboard_input_widget.dart';
-import 'package:flutter_tetris/tetris/model/position_model/position_model.dart';
+import 'package:flutter_tetris/tetris/model/position_model.dart';
 import 'package:flutter_tetris/tetris/next_minos/next_minos.dart';
 import 'package:flutter_tetris/tetris/score/score.dart';
 
 import 'tetris/config/configs.dart';
 import 'tetris/config/tetris_colors.dart';
-import 'tetris/model/panel_model/panel_model.dart';
+import 'tetris/model/panel_model.dart';
 
 class FlutterTetris extends StatefulWidget {
   const FlutterTetris({super.key});
@@ -47,13 +47,13 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       verticalBlockNumber,
       (verticalIndex) => List.generate(
         horizontalBlockNumber,
-        (horizontalIndex) => const PanelModel(
+        (horizontalIndex) => PanelModel(
           hasBlock: false,
           color: TetrisColors.black,
         ),
       ),
     );
-    const wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
+    final wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
     final bottomWall = List.generate(
       horizontalBlockNumber,
       (index) => wall,
@@ -144,7 +144,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           return indexedX.$2;
         }
 
-        const panel = PanelModel(
+        final panel = PanelModel(
           hasBlock: false,
           color: TetrisColors.black,
         );
@@ -395,13 +395,13 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       ..removeWhere((element) => canDeleteIndexes.contains(element.$1));
     fieldState = tempFieldState.map((e) => e.$2).toList();
 
-    const wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
+    final wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
 
     final newHorizontalPanel = [
       wall,
       ...List.generate(
         horizontalBlockNumber,
-        (index) => const PanelModel(hasBlock: false, color: TetrisColors.black),
+        (index) => PanelModel(hasBlock: false, color: TetrisColors.black),
       ),
       wall,
     ];

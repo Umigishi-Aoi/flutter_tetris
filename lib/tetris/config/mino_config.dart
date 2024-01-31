@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_tetris/tetris/config/tetris_colors.dart';
 
-import '../model/panel_model/panel_model.dart';
+import '../model/panel_model.dart';
 import 'rotation.dart';
 
 enum MinoConfig {
@@ -15,14 +15,14 @@ enum MinoConfig {
   l;
 
   Panels getMinoPanel(Rotation r) {
-    const n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
-    const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
-    const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
-    const pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
-    const pS = PanelModel(hasBlock: true, color: TetrisColors.green);
-    const pZ = PanelModel(hasBlock: true, color: TetrisColors.red);
-    const pJ = PanelModel(hasBlock: true, color: TetrisColors.blue);
-    const pL = PanelModel(hasBlock: true, color: TetrisColors.orange);
+    final n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
+    final pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
+    final pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
+    final pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
+    final pS = PanelModel(hasBlock: true, color: TetrisColors.green);
+    final pZ = PanelModel(hasBlock: true, color: TetrisColors.red);
+    final pJ = PanelModel(hasBlock: true, color: TetrisColors.blue);
+    final pL = PanelModel(hasBlock: true, color: TetrisColors.orange);
 
     return switch (this) {
       i => switch (r) {
@@ -175,14 +175,14 @@ enum MinoConfig {
   }
 
   Panels nextMino() {
-    const n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
-    const pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
-    const pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
-    const pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
-    const pS = PanelModel(hasBlock: true, color: TetrisColors.green);
-    const pZ = PanelModel(hasBlock: true, color: TetrisColors.red);
-    const pJ = PanelModel(hasBlock: true, color: TetrisColors.blue);
-    const pL = PanelModel(hasBlock: true, color: TetrisColors.orange);
+    final n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
+    final pI = PanelModel(hasBlock: true, color: TetrisColors.lightBlue);
+    final pO = PanelModel(hasBlock: true, color: TetrisColors.yellow);
+    final pT = PanelModel(hasBlock: true, color: TetrisColors.purple);
+    final pS = PanelModel(hasBlock: true, color: TetrisColors.green);
+    final pZ = PanelModel(hasBlock: true, color: TetrisColors.red);
+    final pJ = PanelModel(hasBlock: true, color: TetrisColors.blue);
+    final pL = PanelModel(hasBlock: true, color: TetrisColors.orange);
 
     return switch (this) {
       i => [
