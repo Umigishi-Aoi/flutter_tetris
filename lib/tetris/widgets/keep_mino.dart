@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/config/mino_config.dart';
-import 'package:flutter_tetris/tetris/mino/mino.dart';
+import 'package:flutter_tetris/tetris/widgets/mino.dart';
 
 import '../config/configs.dart';
 
