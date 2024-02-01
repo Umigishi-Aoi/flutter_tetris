@@ -9,11 +9,18 @@ class MinoStateModel {
   final MinoConfig config;
   final PositionModel position;
   final Rotation rotation;
+
   MinoStateModel({
     required this.config,
     required this.position,
     required this.rotation,
   });
+
+  factory MinoStateModel.init() => MinoStateModel(
+        config: MinoConfig.getRandomMino(),
+        position: PositionModel.init(),
+        rotation: Rotation.r0,
+      );
 
   Panels panels() {
     return config.getMinoPanel(rotation);

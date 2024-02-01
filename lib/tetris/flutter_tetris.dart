@@ -17,11 +17,7 @@ class FlutterTetris extends StatefulWidget {
 
 class _FlutterTetrisState extends State<FlutterTetris> {
   late Panels fieldState;
-  MinoStateModel currentMinoStateModel = MinoStateModel(
-    config: MinoConfig.getRandomMino(),
-    position: PositionModel.init(),
-    rotation: Rotation.r0,
-  );
+  MinoStateModel currentMinoStateModel = MinoStateModel.init();
   List<MinoConfig> nextMinos = [];
   MinoConfig? keepMino;
   Timer timer = Timer.periodic(const Duration(seconds: 10000), (timer) {});
@@ -36,6 +32,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void init() {
+    currentMinoStateModel = MinoStateModel.init();
     fieldState = getInitialField();
     nextMinos.clear();
     nextMinos = setNextMinos(nextMinos: nextMinos);
@@ -43,13 +40,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     isKept = false;
     score = 0;
     isTspin = false;
-    currentMinoStateModel = MinoStateModel(
-      config: nextMinos.first,
-      position: PositionModel.init(),
-      rotation: Rotation.r0,
-    );
-    nextMinos.removeAt(0);
-    nextMinos = setNextMinos(nextMinos: nextMinos);
   }
 
   void left() {
