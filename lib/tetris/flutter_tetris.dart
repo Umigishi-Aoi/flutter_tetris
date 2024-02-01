@@ -1,16 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/feature/tetris_methods/move_down.dart';
-import 'package:flutter_tetris/tetris/feature/tetris_methods/move_left.dart';
+import 'package:flutter_tetris/tetris/feature/tetris_methods/rotate_r90.dart';
+import 'package:flutter_tetris/tetris/feature/tetris_methods/t_spin_set_r90.dart';
 
 import 'configs.dart';
 import 'feature/keyboard_input/widgets/keyboard_input_widget.dart';
 import 'feature/tetris_methods/get_initial_field.dart';
 import 'feature/tetris_methods/hard_drop_loop.dart';
+import 'feature/tetris_methods/move_down.dart';
+import 'feature/tetris_methods/move_left.dart';
 import 'feature/tetris_methods/move_right.dart';
+import 'feature/tetris_methods/rotate_l90.dart';
 import 'feature/tetris_methods/set_mino.dart';
 import 'feature/tetris_methods/set_next_minos.dart';
+import 'feature/tetris_methods/t_spin_set_l90.dart';
 import 'model/enum/mino_config.dart';
 import 'model/enum/rotation.dart';
 import 'model/enum/tetris_colors.dart';
@@ -127,19 +131,25 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void r90() {
-    final currentRotation = currentMinoStateModel.rotation;
     final currentMino = currentMinoStateModel.config;
 
-    final tempRotation = currentRotation.rotateR90();
-    final tempPanels = currentMino.getMinoPanel(tempRotation);
-
     if (currentMino == MinoConfig.t) {
-      tspinSet(rotation: tempRotation, minoPanels: tempPanels);
+      final tSpinResult = tSpinSetR90(
+        currentMinoStateModel: currentMinoStateModel,
+        fieldState: fieldState,
+      );
+
+      if (tSpinResult.$1) {
+        setState(() {
+          fieldState = tSpinResult.$2!;
+        });
+        currentMinoStateModel = tSpinResult.$3!;
+        isTspin = true;
+      }
       return;
     }
 
-    final setResult = setMino(
-      minoStateModel: currentMinoStateModel.copyWith(rotation: tempRotation),
+    final setResult = rotateR90(
       currentMinoStateModel: currentMinoStateModel,
       fieldState: fieldState,
     );
@@ -149,25 +159,30 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         fieldState = setResult.$2!;
       });
 
-      currentMinoStateModel =
-          currentMinoStateModel.copyWith(rotation: tempRotation);
+      currentMinoStateModel = currentMinoStateModel.rotateR90();
     }
   }
 
   void l90() {
-    final currentRotation = currentMinoStateModel.rotation;
     final currentMino = currentMinoStateModel.config;
 
-    final tempRotation = currentRotation.rotateL90();
-    final tempPanels = currentMino.getMinoPanel(tempRotation);
-
     if (currentMino == MinoConfig.t) {
-      tspinSet(rotation: tempRotation, minoPanels: tempPanels);
+      final tSpinResult = tSpinSetL90(
+        currentMinoStateModel: currentMinoStateModel,
+        fieldState: fieldState,
+      );
+
+      if (tSpinResult.$1) {
+        setState(() {
+          fieldState = tSpinResult.$2!;
+        });
+        currentMinoStateModel = tSpinResult.$3!;
+        isTspin = true;
+      }
       return;
     }
 
-    final setResult = setMino(
-      minoStateModel: currentMinoStateModel.copyWith(rotation: tempRotation),
+    final setResult = rotateL90(
       currentMinoStateModel: currentMinoStateModel,
       fieldState: fieldState,
     );
@@ -177,8 +192,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         fieldState = setResult.$2!;
       });
 
-      currentMinoStateModel =
-          currentMinoStateModel.copyWith(rotation: tempRotation);
+      currentMinoStateModel = currentMinoStateModel.rotateL90();
     }
   }
 
