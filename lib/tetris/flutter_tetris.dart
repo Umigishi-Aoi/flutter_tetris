@@ -290,71 +290,73 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         hardDrop: hardDrop,
         child: Scaffold(
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Score(score: score),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    KeepMino(config: keepMino),
-                    Field(
-                      fieldState: fieldState,
-                    ),
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: panelSize * notShowMinoVerticalNumber,
-                        ),
-                        NextMinos(configs: nextMinos),
-                      ],
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: start,
-                  child: const Text('Start'),
-                ),
-                ElevatedButton(
-                  onPressed: keep,
-                  child: const Text('Keep'),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: left,
-                      child: const Text('Left'),
-                    ),
-                    ElevatedButton(
-                      onPressed: right,
-                      child: const Text('Right'),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: down,
-                  child: const Text('Down'),
-                ),
-                ElevatedButton(
-                  onPressed: hardDrop,
-                  child: const Text('Hard Drop'),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: l90,
-                      child: const Text('L90'),
-                    ),
-                    ElevatedButton(
-                      onPressed: r90,
-                      child: const Text('R90'),
-                    ),
-                  ],
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Score(score: score),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      KeepMino(config: keepMino),
+                      Field(
+                        fieldState: fieldState,
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: panelSize * notShowMinoVerticalNumber,
+                          ),
+                          NextMinos(configs: nextMinos),
+                        ],
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: start,
+                    child: const Text('Start'),
+                  ),
+                  ElevatedButton(
+                    onPressed: keep,
+                    child: const Text('Keep'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: left,
+                        child: const Text('Left'),
+                      ),
+                      ElevatedButton(
+                        onPressed: right,
+                        child: const Text('Right'),
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: down,
+                    child: const Text('Down'),
+                  ),
+                  ElevatedButton(
+                    onPressed: hardDrop,
+                    child: const Text('Hard Drop'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: l90,
+                        child: const Text('L90'),
+                      ),
+                      ElevatedButton(
+                        onPressed: r90,
+                        child: const Text('R90'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
