@@ -1,9 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter_tetris/tetris/config/tetris_colors.dart';
-
-import '../model/panel_model.dart';
+import '../panel_model.dart';
 import 'rotation.dart';
+import 'tetris_colors.dart';
 
 enum MinoConfig {
   i,
@@ -13,6 +12,12 @@ enum MinoConfig {
   z,
   j,
   l;
+
+  factory MinoConfig.getRandomMino() {
+    final random = Random();
+
+    return MinoConfig.values[random.nextInt(MinoConfig.values.length)];
+  }
 
   Panels getMinoPanel(Rotation r) {
     final n = PanelModel(hasBlock: false, color: TetrisColors.transparent);
@@ -166,12 +171,6 @@ enum MinoConfig {
             ],
         },
     };
-  }
-
-  static MinoConfig getRandomMino() {
-    final random = Random();
-
-    return MinoConfig.values[random.nextInt(MinoConfig.values.length)];
   }
 
   Panels nextMino() {

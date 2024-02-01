@@ -18,16 +18,4 @@ enum TetrisColors {
   });
 
   final Color color;
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'color': color.value,
-    };
-  }
-
-  static TetrisColors fromMap(Map<String, dynamic> map) {
-    return TetrisColors.values.firstWhere(
-      (element) => element.color.value == map['color'],
-    );
-  }
 }

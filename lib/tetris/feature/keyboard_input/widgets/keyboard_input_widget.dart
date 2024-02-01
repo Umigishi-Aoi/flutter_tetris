@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_tetris/tetris/keyboard_input/actions.dart';
-import 'package:flutter_tetris/tetris/keyboard_input/intents.dart';
+
+import '../settings/actions.dart';
+import '../settings/intents.dart';
 
 class KeyboardInputWidget extends StatelessWidget {
   const KeyboardInputWidget({

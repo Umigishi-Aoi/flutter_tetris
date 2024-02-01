@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/config/configs.dart';
+import 'package:flutter_tetris/tetris/configs.dart';
 
 class Score extends StatelessWidget {
   const Score({

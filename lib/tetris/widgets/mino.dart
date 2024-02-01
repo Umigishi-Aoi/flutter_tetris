@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/model/panel_model.dart';
 
-import '../block/block.dart';
+import 'block.dart';
 
 class Mino extends StatelessWidget {
   const Mino({
