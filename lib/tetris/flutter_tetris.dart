@@ -1,9 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tetris/tetris/feature/tetris_methods/move_down.dart';
+import 'package:flutter_tetris/tetris/feature/tetris_methods/move_left.dart';
 
 import 'configs.dart';
 import 'feature/keyboard_input/widgets/keyboard_input_widget.dart';
+import 'feature/tetris_methods/get_initial_field.dart';
+import 'feature/tetris_methods/hard_drop_loop.dart';
+import 'feature/tetris_methods/move_right.dart';
+import 'feature/tetris_methods/set_mino.dart';
+import 'feature/tetris_methods/set_next_minos.dart';
 import 'model/enum/mino_config.dart';
 import 'model/enum/rotation.dart';
 import 'model/enum/tetris_colors.dart';
@@ -43,37 +50,9 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void init() {
-    final playField = List.generate(
-      verticalBlockNumber,
-      (verticalIndex) => List.generate(
-        horizontalBlockNumber,
-        (horizontalIndex) => PanelModel(
-          hasBlock: false,
-          color: TetrisColors.black,
-        ),
-      ),
-    );
-    final wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
-    final bottomWall = List.generate(
-      horizontalBlockNumber,
-      (index) => wall,
-    );
-    final fieldWithBottomWall = [
-      ...playField,
-      bottomWall,
-    ];
-
-    fieldState = fieldWithBottomWall
-        .map(
-          (horizontalPanels) => [
-            wall,
-            ...horizontalPanels,
-            wall,
-          ],
-        )
-        .toList();
+    fieldState = getInitialField();
     nextMinos.clear();
-    setNextMino();
+    nextMinos = setNextMinos(nextMinos: nextMinos);
     keepMino = null;
     isKept = false;
     score = 0;
@@ -84,194 +63,48 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       rotation: Rotation.r0,
     );
     nextMinos.removeAt(0);
-    setNextMino();
-  }
-
-  void setNextMino() {
-    while (nextMinos.length < nextMinoNumber) {
-      final temp = MinoConfig.getRandomMino();
-      if (nextMinos.isEmpty) {
-        nextMinos.add(temp);
-      }
-      if (nextMinos.last != temp) {
-        nextMinos.add(temp);
-      }
-    }
-  }
-
-  Panels deleteCurrentMinoFromField() {
-    final currentPosition = currentMinoStateModel.position;
-    final currentMinoPanels = currentMinoStateModel.panels();
-
-    final minoPanelVerticalLength = currentMinoPanels.length;
-    final minoPanelHorizontalLength = currentMinoPanels[0].length;
-
-    var tempIndexX = 0;
-    var tempIndexY = 0;
-
-    // 現在のMinoの削除処理
-
-    return fieldState.indexed.map((indexedY) {
-      if (indexedY.$1 < currentPosition.y ||
-          indexedY.$1 >= currentPosition.y + minoPanelVerticalLength) {
-        return indexedY.$2;
-      }
-      final panels = indexedY.$2.indexed.map((indexedX) {
-        if (indexedX.$1 < currentPosition.x ||
-            indexedX.$1 >= currentPosition.x + minoPanelHorizontalLength) {
-          return indexedX.$2;
-        }
-        if (!currentMinoPanels[tempIndexY][tempIndexX].hasBlock) {
-          tempIndexX++;
-          return indexedX.$2;
-        }
-
-        final panel = PanelModel(
-          hasBlock: false,
-          color: TetrisColors.black,
-        );
-
-        tempIndexX++;
-        return panel;
-      }).toList();
-      tempIndexX = 0;
-      tempIndexY++;
-      return panels;
-    }).toList();
-  }
-
-  (bool, Panels) setNewMinoInField({
-    required MinoStateModel minoStateModel,
-    required Panels fieldState,
-  }) {
-    final position = minoStateModel.position;
-
-    // 新しいMinoPanel の設定処理
-
-    final minoPanels = minoStateModel.panels();
-
-    final newMinoPanelVerticalLength = minoPanels.length;
-    final newMinoPanelHorizontalLength = minoPanels[0].length;
-
-    var setSuccess = true;
-
-    var tempIndexX = 0;
-    var tempIndexY = 0;
-
-    final tempFieldState = fieldState.indexed.map((indexedY) {
-      if (indexedY.$1 < position.y ||
-          indexedY.$1 >= position.y + newMinoPanelVerticalLength) {
-        return indexedY.$2;
-      }
-      final panels = indexedY.$2.indexed.map((indexedX) {
-        if (indexedX.$1 < position.x ||
-            indexedX.$1 >= position.x + newMinoPanelHorizontalLength) {
-          return indexedX.$2;
-        }
-        if (!minoPanels[tempIndexY][tempIndexX].hasBlock) {
-          tempIndexX++;
-          return indexedX.$2;
-        }
-
-        if (indexedX.$2.hasBlock) {
-          setSuccess = false;
-        }
-
-        final panel = minoPanels[tempIndexY][tempIndexX];
-
-        tempIndexX++;
-        return panel;
-      }).toList();
-      tempIndexX = 0;
-      tempIndexY++;
-      return panels;
-    }).toList();
-
-    return (setSuccess, tempFieldState);
-  }
-
-  (bool, Panels?) set({
-    required MinoStateModel minoStateModel,
-    bool isKeep = false,
-  }) {
-    final position = minoStateModel.position;
-    final rotation = minoStateModel.rotation;
-
-    final currentPosition = currentMinoStateModel.position;
-    final currentRotation = currentMinoStateModel.rotation;
-
-    if (position.x < 0 || position.x >= horizontalBlockNumber) {
-      return (false, null);
-    }
-    if (position.y < 0 || position.y >= verticalBlockNumber) {
-      return (false, null);
-    }
-    if (currentPosition == position && currentRotation == rotation && !isKeep) {
-      return (false, null);
-    }
-
-    final tempFieldState = deleteCurrentMinoFromField();
-
-    final fieldRecord = setNewMinoInField(
-      minoStateModel: minoStateModel,
-      fieldState: tempFieldState,
-    );
-
-    return fieldRecord;
+    nextMinos = setNextMinos(nextMinos: nextMinos);
   }
 
   void left() {
-    final currentPosition = currentMinoStateModel.position;
-
-    final tempPosition = currentPosition.copyWith(x: currentPosition.x - 1);
-
-    final setResult = set(
-      minoStateModel: currentMinoStateModel.copyWith(position: tempPosition),
+    final setResult = moveLeft(
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
     );
 
     if (setResult.$1) {
       setState(() {
         fieldState = setResult.$2!;
       });
-      currentMinoStateModel =
-          currentMinoStateModel.copyWith(position: tempPosition);
+      currentMinoStateModel = currentMinoStateModel.moveLeft();
     }
   }
 
   void right() {
-    final currentPosition = currentMinoStateModel.position;
-
-    final tempPosition = currentPosition.copyWith(x: currentPosition.x + 1);
-
-    final setResult = set(
-      minoStateModel: currentMinoStateModel.copyWith(position: tempPosition),
+    final setResult = moveRight(
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
     );
 
     if (setResult.$1) {
       setState(() {
         fieldState = setResult.$2!;
       });
-      currentMinoStateModel =
-          currentMinoStateModel.copyWith(position: tempPosition);
+      currentMinoStateModel = currentMinoStateModel.moveRight();
     }
   }
 
   void down() {
-    final currentPosition = currentMinoStateModel.position;
-
-    final tempPosition = currentPosition.copyWith(y: currentPosition.y + 1);
-
-    final setResult = set(
-      minoStateModel: currentMinoStateModel.copyWith(position: tempPosition),
+    final setResult = moveDown(
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
     );
 
     if (setResult.$1) {
       setState(() {
         fieldState = setResult.$2!;
       });
-
-      currentMinoStateModel =
-          currentMinoStateModel.copyWith(position: tempPosition);
+      currentMinoStateModel = currentMinoStateModel.moveDown();
       isTspin = false;
     } else {
       deletePanels();
@@ -282,27 +115,14 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void hardDrop() {
-    for (var i = 0; i < verticalBlockNumber * 2; i++) {
-      final tempPosition = currentMinoStateModel.position
-          .copyWith(y: currentMinoStateModel.position.y + 1);
-
-      final minoStateModel =
-          currentMinoStateModel.copyWith(position: tempPosition);
-
-      final setResult = set(
-        minoStateModel: minoStateModel,
-      );
-
-      if (setResult.$1) {
-        setState(() {
-          fieldState = setResult.$2!;
-        });
-
-        currentMinoStateModel = minoStateModel;
-      } else {
-        break;
-      }
-    }
+    final loopResult = hardDropLoop(
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
+    );
+    setState(() {
+      currentMinoStateModel = loopResult.$1;
+      fieldState = loopResult.$2;
+    });
     down();
   }
 
@@ -318,8 +138,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       return;
     }
 
-    final setResult = set(
+    final setResult = setMino(
       minoStateModel: currentMinoStateModel.copyWith(rotation: tempRotation),
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
     );
 
     if (setResult.$1) {
@@ -344,8 +166,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       return;
     }
 
-    final setResult = set(
+    final setResult = setMino(
       minoStateModel: currentMinoStateModel.copyWith(rotation: tempRotation),
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
     );
 
     if (setResult.$1) {
@@ -365,13 +189,18 @@ class _FlutterTetrisState extends State<FlutterTetris> {
       rotation: Rotation.r0,
     );
 
-    final setResult = set(minoStateModel: nextMinoStateModel);
+    final setResult = setMino(
+      minoStateModel: nextMinoStateModel,
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
+    );
 
     if (setResult.$1) {
       currentMinoStateModel = nextMinoStateModel;
 
       nextMinos.removeAt(0);
-      setNextMino();
+
+      nextMinos = setNextMinos(nextMinos: nextMinos);
     } else {
       stop();
     }
@@ -457,7 +286,11 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     final tempMinoStateModel =
         currentMinoStateModel.copyWith(rotation: rotation);
 
-    final setResult = set(minoStateModel: tempMinoStateModel);
+    final setResult = setMino(
+      minoStateModel: tempMinoStateModel,
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
+    );
 
     //通常の回転でセットできる時
     if (setResult.$1) {
@@ -513,7 +346,11 @@ class _FlutterTetrisState extends State<FlutterTetris> {
           rotation: rotation,
         );
 
-        final setResult = set(minoStateModel: tempMinoStateModel);
+        final setResult = setMino(
+          minoStateModel: tempMinoStateModel,
+          currentMinoStateModel: currentMinoStateModel,
+          fieldState: fieldState,
+        );
 
         if (setResult.$1) {
           setState(() {
@@ -540,7 +377,12 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         config: keepMino,
       );
 
-      final setResult = set(minoStateModel: minoStateModel, isKeep: true);
+      final setResult = setMino(
+        minoStateModel: minoStateModel,
+        currentMinoStateModel: currentMinoStateModel,
+        fieldState: fieldState,
+        isKeep: true,
+      );
 
       if (setResult.$1) {
         setState(() {
@@ -556,7 +398,12 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         config: nextMinos.first,
       );
 
-      final setResult = set(minoStateModel: minoStateModel, isKeep: true);
+      final setResult = setMino(
+        minoStateModel: minoStateModel,
+        currentMinoStateModel: currentMinoStateModel,
+        fieldState: fieldState,
+        isKeep: true,
+      );
 
       if (setResult.$1) {
         setState(() {
@@ -565,7 +412,8 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         keepMino = currentMino;
         currentMinoStateModel = minoStateModel;
         nextMinos.removeAt(0);
-        setNextMino();
+
+        nextMinos = setNextMinos(nextMinos: nextMinos);
       }
     }
 

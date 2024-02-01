@@ -48,4 +48,27 @@ class MinoStateModel {
 
   @override
   int get hashCode => config.hashCode ^ position.hashCode ^ rotation.hashCode;
+
+  MinoStateModel moveLeft() {
+    final tempPosition = position.copyWith(x: position.x - 1);
+    return copyWith(position: tempPosition);
+  }
+
+  MinoStateModel moveRight() {
+    final tempPosition = position.copyWith(x: position.x + 1);
+    return copyWith(position: tempPosition);
+  }
+
+  MinoStateModel moveDown() {
+    final tempPosition = position.copyWith(y: position.y + 1);
+    return copyWith(position: tempPosition);
+  }
+
+  MinoStateModel rotateR90() {
+    return copyWith(rotation: rotation.rotateR90());
+  }
+
+  MinoStateModel rotateL90() {
+    return copyWith(rotation: rotation.rotateL90());
+  }
 }
