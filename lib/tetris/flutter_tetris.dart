@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/tetris/feature/tetris_methods/delete_panels_method.dart';
+import 'package:flutter_tetris/tetris/feature/tetris_methods/keep_method.dart';
 import 'package:flutter_tetris/tetris/feature/tetris_methods/rotate_r90.dart';
 import 'package:flutter_tetris/tetris/feature/tetris_methods/t_spin_set_r90.dart';
 
@@ -258,58 +259,38 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void keep() {
-    final currentMino = currentMinoStateModel.config;
-
     if (isKept) {
       return;
     }
 
-    if (keepMino != null) {
-      final minoStateModel = currentMinoStateModel.copyWith(
-        rotation: Rotation.r0,
-        config: keepMino,
-      );
+    final keepResult = keepMethod(
+      currentMinoStateModel: currentMinoStateModel,
+      fieldState: fieldState,
+      keepMino: keepMino,
+      nextMinos: nextMinos,
+    );
 
-      final setResult = setMino(
-        minoStateModel: minoStateModel,
-        currentMinoStateModel: currentMinoStateModel,
-        fieldState: fieldState,
-        isKeep: true,
-      );
-
-      if (setResult.$1) {
-        setState(() {
-          fieldState = setResult.$2!;
-        });
-
-        keepMino = currentMino;
-        currentMinoStateModel = minoStateModel;
-      }
-    } else {
-      final minoStateModel = currentMinoStateModel.copyWith(
-        rotation: Rotation.r0,
-        config: nextMinos.first,
-      );
-
-      final setResult = setMino(
-        minoStateModel: minoStateModel,
-        currentMinoStateModel: currentMinoStateModel,
-        fieldState: fieldState,
-        isKeep: true,
-      );
-
-      if (setResult.$1) {
-        setState(() {
-          fieldState = setResult.$2!;
-        });
-        keepMino = currentMino;
-        currentMinoStateModel = minoStateModel;
+    if (keepResult.$1) {
+      setState(() {
+        fieldState = keepResult.$2!;
+      });
+      if (keepMino != null) {
+        final tempMino = keepMino;
+        keepMino = currentMinoStateModel.config;
+        currentMinoStateModel = currentMinoStateModel.copyWith(
+          rotation: Rotation.r0,
+          config: tempMino,
+        );
+      } else {
+        keepMino = currentMinoStateModel.config;
+        currentMinoStateModel = currentMinoStateModel.copyWith(
+          rotation: Rotation.r0,
+          config: nextMinos.first,
+        );
         nextMinos.removeAt(0);
-
         nextMinos = setNextMinos(nextMinos: nextMinos);
       }
     }
-
     isKept = true;
   }
 
