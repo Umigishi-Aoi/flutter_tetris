@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tetris/tetris/feature/tetris_methods/delete_panels_method.dart';
 import 'package:flutter_tetris/tetris/feature/tetris_methods/rotate_r90.dart';
 import 'package:flutter_tetris/tetris/feature/tetris_methods/t_spin_set_r90.dart';
 
@@ -17,7 +18,6 @@ import 'feature/tetris_methods/set_next_minos.dart';
 import 'feature/tetris_methods/t_spin_set_l90.dart';
 import 'model/enum/mino_config.dart';
 import 'model/enum/rotation.dart';
-import 'model/enum/tetris_colors.dart';
 import 'model/mino_state_model.dart';
 import 'model/panel_model.dart';
 import 'model/position_model.dart';
@@ -221,51 +221,15 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   }
 
   void deletePanels() {
-    final canDeleteIndexes = <int>[];
+    final deletePanelsResult = deletePanelsMethod(fieldState: fieldState);
 
-    for (final indexed in fieldState.indexed) {
-      var canDelete = true;
-      if (indexed.$1 == verticalBlockNumber) {
-        break;
-      }
-      for (final panel in indexed.$2) {
-        if (!panel.hasBlock) {
-          canDelete = false;
-          break;
-        }
-      }
-      if (canDelete) {
-        canDeleteIndexes.add(indexed.$1);
-      }
-    }
-    final tempFieldState = fieldState.indexed.toList()
-      ..removeWhere((element) => canDeleteIndexes.contains(element.$1));
-    fieldState = tempFieldState.map((e) => e.$2).toList();
-
-    final wall = PanelModel(hasBlock: true, color: TetrisColors.grey);
-
-    final newHorizontalPanel = [
-      wall,
-      ...List.generate(
-        horizontalBlockNumber,
-        (index) => PanelModel(hasBlock: false, color: TetrisColors.black),
-      ),
-      wall,
-    ];
-
-    score += (canDeleteIndexes.length) *
-        (canDeleteIndexes.length) *
+    score += (deletePanelsResult.$1) *
+        (deletePanelsResult.$1) *
         scoreUnit *
         (isTspin ? tspinBonus : 1);
 
     setState(() {
-      fieldState = [
-        ...List.generate(
-          canDeleteIndexes.length,
-          (index) => newHorizontalPanel,
-        ),
-        ...fieldState,
-      ];
+      fieldState = deletePanelsResult.$2;
     });
   }
 
