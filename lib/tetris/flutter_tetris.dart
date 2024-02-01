@@ -1,31 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/feature/tetris_methods/delete_panels_method.dart';
-import 'package:flutter_tetris/tetris/feature/tetris_methods/keep_method.dart';
-import 'package:flutter_tetris/tetris/feature/tetris_methods/rotate_r90.dart';
-import 'package:flutter_tetris/tetris/feature/tetris_methods/t_spin_set_r90.dart';
 
 import 'configs.dart';
 import 'feature/keyboard_input/widgets/keyboard_input_widget.dart';
-import 'feature/tetris_methods/get_initial_field.dart';
-import 'feature/tetris_methods/hard_drop_loop.dart';
-import 'feature/tetris_methods/move_down.dart';
-import 'feature/tetris_methods/move_left.dart';
-import 'feature/tetris_methods/move_right.dart';
-import 'feature/tetris_methods/rotate_l90.dart';
-import 'feature/tetris_methods/set_mino.dart';
-import 'feature/tetris_methods/set_next_minos.dart';
-import 'feature/tetris_methods/t_spin_set_l90.dart';
-import 'model/enum/mino_config.dart';
-import 'model/enum/rotation.dart';
-import 'model/mino_state_model.dart';
-import 'model/panel_model.dart';
-import 'model/position_model.dart';
-import 'widgets/field.dart';
-import 'widgets/keep_mino.dart';
-import 'widgets/next_minos.dart';
-import 'widgets/score.dart';
+import 'feature/tetris_methods/methods.dart';
+import 'model/models.dart';
+import 'widgets/widgets.dart';
 
 class FlutterTetris extends StatefulWidget {
   const FlutterTetris({super.key});
