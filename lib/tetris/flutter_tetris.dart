@@ -21,9 +21,10 @@ class _FlutterTetrisState extends State<FlutterTetris> {
   List<MinoConfig> nextMinos = [];
   MinoConfig? keepMino;
   Timer timer = Timer.periodic(const Duration(seconds: 10000), (timer) {});
-  bool isKept = false;
   int score = 0;
   bool isTspin = false;
+
+  bool get isKept => currentMinoStateModel.config == keepMino;
 
   @override
   void initState() {
@@ -37,7 +38,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     nextMinos.clear();
     nextMinos = setNextMinos(nextMinos: nextMinos);
     keepMino = null;
-    isKept = false;
     score = 0;
     isTspin = false;
   }
@@ -85,7 +85,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     } else {
       deletePanels();
       isTspin = false;
-      isKept = false;
       add();
     }
   }
@@ -262,7 +261,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
         nextMinos = setNextMinos(nextMinos: nextMinos);
       }
     }
-    isKept = true;
   }
 
   @override
