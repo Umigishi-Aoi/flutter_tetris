@@ -1,8 +1,6 @@
-import 'package:flutter_tetris/tetris/model/mino_state_model.dart';
-
 import '../../model/enum/tetris_colors.dart';
+import '../../model/mino_state_model.dart';
 import '../../model/panel_model.dart';
-
 
 /// 現在のMinoの削除処理
 Panels deleteCurrentMinoFromField({

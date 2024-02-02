@@ -1,8 +1,7 @@
-import 'package:flutter_tetris/tetris/feature/tetris_methods/move_down.dart';
-
 import '../../configs.dart';
 import '../../model/mino_state_model.dart';
 import '../../model/panel_model.dart';
+import 'move_down.dart';
 
 (MinoStateModel, Panels) hardDropLoop({
   required MinoStateModel currentMinoStateModel,

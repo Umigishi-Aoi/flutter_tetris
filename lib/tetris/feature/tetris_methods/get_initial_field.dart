@@ -1,7 +1,6 @@
-import 'package:flutter_tetris/tetris/model/panel_model.dart';
-
 import '../../configs.dart';
 import '../../model/enum/tetris_colors.dart';
+import '../../model/panel_model.dart';
 
 /// 初期状態のFieldStateを取得するメソッド;
 Panels getInitialField() {

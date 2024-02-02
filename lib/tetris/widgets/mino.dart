@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tetris/tetris/model/panel_model.dart';
+import '../model/panel_model.dart';
 
 import 'block.dart';
 

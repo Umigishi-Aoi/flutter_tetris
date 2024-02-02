@@ -1,7 +1,6 @@
-import 'package:flutter_tetris/tetris/model/mino_state_model.dart';
-
 import '../../configs.dart';
 import '../../model/enum/mino_config.dart';
+import '../../model/mino_state_model.dart';
 import '../../model/panel_model.dart';
 import '../../model/position_model.dart';
 import 'set_mino.dart';
