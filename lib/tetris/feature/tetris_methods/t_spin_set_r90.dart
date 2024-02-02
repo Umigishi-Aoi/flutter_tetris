@@ -1,5 +1,4 @@
-import 'package:flutter_tetris/tetris/model/mino_state_model.dart';
-
+import '../../model/mino_state_model.dart';
 import '../../model/panel_model.dart';
 import 't_spin_set.dart';
 
