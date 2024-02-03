@@ -15,15 +15,11 @@ class Block extends StatelessWidget {
       height: panelSize,
       width: panelSize,
       decoration: BoxDecoration(
-        color: panel.isTransparent
-            ? TetrisColors.transparent.color
-            : panel.color.color,
+        color: panel.color.color,
         border: Border.all(
-          color: panel.isTransparent
-              ? TetrisColors.transparent.color
-              : panel.color == TetrisColors.black
-                  ? TetrisColors.black.color
-                  : TetrisColors.white.color,
+          color: panel.color == TetrisColors.black
+              ? TetrisColors.black.color
+              : TetrisColors.white.color,
         ),
       ),
     );
