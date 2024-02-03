@@ -19,3 +19,8 @@ const scoreHeight = 16.0;
 const scoreUnit = 100;
 
 const tspinBonus = 3;
+
+const infoBoxWidth = 108.0;
+const keepMinoBoxHeight = 56.0;
+
+const infoBorderWidth = 2.0;
