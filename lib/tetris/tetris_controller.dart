@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../configs.dart';
-import '../feature/tetris_methods/methods.dart';
-import '../model/models.dart';
+import 'configs.dart';
+import 'feature/tetris_methods/methods.dart';
+import 'model/models.dart';
 
 class _InheritedTetris extends InheritedWidget {
   const _InheritedTetris({
@@ -12,26 +12,26 @@ class _InheritedTetris extends InheritedWidget {
     required super.child,
   });
 
-  final TetrisState data;
+  final TetrisControllerState data;
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
 }
 
-class Tetris extends StatefulWidget {
-  const Tetris({super.key, required this.child});
+class TetrisController extends StatefulWidget {
+  const TetrisController({super.key, required this.child});
 
   final Widget child;
 
-  static TetrisState of(BuildContext context) {
+  static TetrisControllerState of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<_InheritedTetris>()!.data;
   }
 
   @override
-  State<Tetris> createState() => TetrisState();
+  State<TetrisController> createState() => TetrisControllerState();
 }
 
-class TetrisState extends State<Tetris> {
+class TetrisControllerState extends State<TetrisController> {
   Panels fieldState = [];
   MinoStateModel currentMinoStateModel = MinoStateModel.init();
   List<MinoConfig> nextMinos = [];
@@ -63,6 +63,9 @@ class TetrisState extends State<Tetris> {
   }
 
   void left() {
+    if (!timer.isActive) {
+      return;
+    }
     final setResult = moveLeft(
       currentMinoStateModel: currentMinoStateModel,
       fieldState: fieldState,
@@ -77,6 +80,9 @@ class TetrisState extends State<Tetris> {
   }
 
   void right() {
+    if (!timer.isActive) {
+      return;
+    }
     final setResult = moveRight(
       currentMinoStateModel: currentMinoStateModel,
       fieldState: fieldState,
@@ -91,6 +97,10 @@ class TetrisState extends State<Tetris> {
   }
 
   void down() {
+    if (!timer.isActive) {
+      return;
+    }
+
     final setResult = moveDown(
       currentMinoStateModel: currentMinoStateModel,
       fieldState: fieldState,
@@ -110,6 +120,9 @@ class TetrisState extends State<Tetris> {
   }
 
   void hardDrop() {
+    if (!timer.isActive) {
+      return;
+    }
     final loopResult = hardDropLoop(
       currentMinoStateModel: currentMinoStateModel,
       fieldState: fieldState,
@@ -122,6 +135,9 @@ class TetrisState extends State<Tetris> {
   }
 
   void r90() {
+    if (!timer.isActive) {
+      return;
+    }
     final currentMino = currentMinoStateModel.config;
 
     if (currentMino == MinoConfig.t) {
@@ -155,6 +171,9 @@ class TetrisState extends State<Tetris> {
   }
 
   void l90() {
+    if (!timer.isActive) {
+      return;
+    }
     final currentMino = currentMinoStateModel.config;
 
     if (currentMino == MinoConfig.t) {
@@ -240,6 +259,9 @@ class TetrisState extends State<Tetris> {
   }
 
   void keep() {
+    if (!timer.isActive) {
+      return;
+    }
     if (isKept) {
       return;
     }
