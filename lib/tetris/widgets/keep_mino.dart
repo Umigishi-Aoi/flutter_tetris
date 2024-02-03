@@ -12,14 +12,17 @@ class KeepMino extends StatelessWidget {
     final config = TetrisController.of(context).keepMino;
 
     return SizedBox(
-      width: panelSize * 5,
+      width: fieldPanelSize * 5,
       child: Builder(
         builder: (context) {
           if (config == null) {
             return Container();
           }
 
-          return Mino(minoPanel: config.nextMino());
+          return Mino(
+            minoPanel: config.nextMino(),
+            panelSize: infoPanelSize,
+          );
         },
       ),
     );

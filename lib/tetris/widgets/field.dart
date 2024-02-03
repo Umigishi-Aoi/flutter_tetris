@@ -21,7 +21,10 @@ class Field extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: indexedHorizontalPanels.$2
                 .map(
-                  (panel) => Block(panel: panel),
+                  (panel) => Block(
+                    panel: panel,
+                    panelSize: fieldPanelSize,
+                  ),
                 )
                 .toList(),
           );

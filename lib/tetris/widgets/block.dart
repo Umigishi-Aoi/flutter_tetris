@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../configs.dart';
 import '../model/enum/tetris_colors.dart';
 import '../model/panel_model.dart';
 
 class Block extends StatelessWidget {
-  const Block({super.key, required this.panel});
+  const Block({
+    super.key,
+    required this.panel,
+    required this.panelSize,
+  });
 
   final PanelModel panel;
+  final double panelSize;
 
   @override
   Widget build(BuildContext context) {
