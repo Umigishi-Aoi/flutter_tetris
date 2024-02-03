@@ -13,35 +13,20 @@ class FlutterTetris extends StatelessWidget {
         home: Builder(
           builder: (context) {
             return KeyboardInputWidget(
-              start: TetrisController.of(context).start,
-              right: TetrisController.of(context).right,
-              left: TetrisController.of(context).left,
-              down: TetrisController.of(context).down,
-              r90: TetrisController.of(context).r90,
-              l90: TetrisController.of(context).l90,
-              keep: TetrisController.of(context).keep,
-              hardDrop: TetrisController.of(context).hardDrop,
               child: Scaffold(
                 body: Center(
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Score(score: TetrisController.of(context).score),
-                        Row(
+                        const Score(),
+                        const Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            KeepMino(
-                              config: TetrisController.of(context).keepMino,
-                            ),
-                            Field(
-                              fieldState:
-                                  TetrisController.of(context).fieldState,
-                            ),
-                            NextMinos(
-                              configs: TetrisController.of(context).nextMinos,
-                            ),
+                            KeepMino(),
+                            Field(),
+                            NextMinos(),
                           ],
                         ),
                         ElevatedButton(

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../configs.dart';
-import '../model/panel_model.dart';
+import '../tetris_controller.dart';
 import 'block.dart';
 
 class Field extends StatelessWidget {
-  const Field({required this.fieldState, super.key});
-
-  final Panels fieldState;
+  const Field({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final fieldState = TetrisController.of(context).fieldState;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

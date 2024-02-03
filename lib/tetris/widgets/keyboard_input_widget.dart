@@ -3,30 +3,15 @@ import 'package:flutter/services.dart';
 
 import '../feature/keyboard_input/actions.dart';
 import '../feature/keyboard_input/intents.dart';
+import '../tetris_controller.dart';
 
 class KeyboardInputWidget extends StatelessWidget {
   const KeyboardInputWidget({
     super.key,
     required this.child,
-    required this.start,
-    required this.right,
-    required this.left,
-    required this.down,
-    required this.r90,
-    required this.l90,
-    required this.keep,
-    required this.hardDrop,
   });
 
   final Widget child;
-  final void Function() start;
-  final void Function() right;
-  final void Function() left;
-  final void Function() down;
-  final void Function() r90;
-  final void Function() l90;
-  final void Function() keep;
-  final void Function() hardDrop;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +28,15 @@ class KeyboardInputWidget extends StatelessWidget {
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
-          StartIntent: StartAction(func: start),
-          RightIntent: RightAction(func: right),
-          LeftIntent: LeftAction(func: left),
-          DownIntent: DownAction(func: down),
-          R90Intent: R90Action(func: r90),
-          L90Intent: L90Action(func: l90),
-          KeepIntent: KeepAction(func: keep),
-          HardDropIntent: HardDropAction(func: hardDrop),
+          StartIntent: StartAction(func: TetrisController.of(context).start),
+          RightIntent: RightAction(func: TetrisController.of(context).right),
+          LeftIntent: LeftAction(func: TetrisController.of(context).left),
+          DownIntent: DownAction(func: TetrisController.of(context).down),
+          R90Intent: R90Action(func: TetrisController.of(context).r90),
+          L90Intent: L90Action(func: TetrisController.of(context).l90),
+          KeepIntent: KeepAction(func: TetrisController.of(context).keep),
+          HardDropIntent:
+              HardDropAction(func: TetrisController.of(context).hardDrop),
         },
         child: Focus(
           autofocus: true,
