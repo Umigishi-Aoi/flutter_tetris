@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'tetris_controller.dart';
 import 'widgets/widgets.dart';
 
 class FlutterTetris extends StatelessWidget {
@@ -32,14 +33,15 @@ class FlutterTetris extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             KeepMino(
-                                config: TetrisController.of(context).keepMino),
+                              config: TetrisController.of(context).keepMino,
+                            ),
                             Field(
                               fieldState:
                                   TetrisController.of(context).fieldState,
                             ),
                             NextMinos(
-                                configs:
-                                    TetrisController.of(context).nextMinos),
+                              configs: TetrisController.of(context).nextMinos,
+                            ),
                           ],
                         ),
                         ElevatedButton(
