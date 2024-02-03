@@ -219,15 +219,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
     timer.cancel();
   }
 
-  void setTransparent() {
-    fieldState = fieldState.indexed.map((y) {
-      if (y.$1 < notShowMinoVerticalNumber) {
-        return y.$2.map((x) => x.copyWith(isTransparent: true)).toList();
-      }
-      return y.$2.map((x) => x.copyWith(isTransparent: false)).toList();
-    }).toList();
-  }
-
   void keep() {
     if (isKept) {
       return;
@@ -265,7 +256,6 @@ class _FlutterTetrisState extends State<FlutterTetris> {
 
   @override
   Widget build(BuildContext context) {
-    setTransparent();
     return MaterialApp(
       home: KeyboardInputWidget(
         start: start,
@@ -291,14 +281,7 @@ class _FlutterTetrisState extends State<FlutterTetris> {
                       Field(
                         fieldState: fieldState,
                       ),
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: panelSize * notShowMinoVerticalNumber,
-                          ),
-                          NextMinos(configs: nextMinos),
-                        ],
-                      ),
+                      NextMinos(configs: nextMinos),
                     ],
                   ),
                   ElevatedButton(

@@ -4,11 +4,9 @@ import 'enum/tetris_colors.dart';
 class PanelModel {
   bool hasBlock;
   TetrisColors color;
-  bool isTransparent = false;
   PanelModel({
     required this.hasBlock,
     required this.color,
-    this.isTransparent = false,
   });
 
   PanelModel copyWith({
@@ -19,13 +17,11 @@ class PanelModel {
     return PanelModel(
       hasBlock: hasBlock ?? this.hasBlock,
       color: color ?? this.color,
-      isTransparent: isTransparent ?? this.isTransparent,
     );
   }
 
   @override
-  String toString() =>
-      'PanelModel(hasBlock: $hasBlock, color: $color, isTransparent: $isTransparent)';
+  String toString() => 'PanelModel(hasBlock: $hasBlock, color: $color)';
 
   @override
   bool operator ==(covariant PanelModel other) {
@@ -33,14 +29,11 @@ class PanelModel {
       return true;
     }
 
-    return other.hasBlock == hasBlock &&
-        other.color == color &&
-        other.isTransparent == isTransparent;
+    return other.hasBlock == hasBlock && other.color == color;
   }
 
   @override
-  int get hashCode =>
-      hasBlock.hashCode ^ color.hashCode ^ isTransparent.hashCode;
+  int get hashCode => hasBlock.hashCode ^ color.hashCode;
 }
 
 typedef Panels = List<List<PanelModel>>;

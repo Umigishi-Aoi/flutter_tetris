@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../model/panel_model.dart';
 
+import '../configs.dart';
+import '../model/panel_model.dart';
 import 'block.dart';
 
 class Field extends StatelessWidget {
@@ -13,16 +14,19 @@ class Field extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ...fieldState.map(
-          (horizontalPanels) => Row(
+        ...fieldState.indexed.map((indexedHorizontalPanels) {
+          if (indexedHorizontalPanels.$1 < notShowMinoVerticalNumber) {
+            return const SizedBox.shrink();
+          }
+          return Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: horizontalPanels
+            children: indexedHorizontalPanels.$2
                 .map(
                   (panel) => Block(panel: panel),
                 )
                 .toList(),
-          ),
-        ),
+          );
+        }),
       ],
     );
   }
