@@ -13,4 +13,4 @@ Key config:
 - keyX:  R90
 - keyZ:  L90
 - keyC:  Keep
-- space:  HardDrop
+- arrowUp:  HardDrop
