@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'configs.dart';
 import 'feature/tetris_methods/methods.dart';
+import 'model/enum/game_info.dart';
 import 'model/models.dart';
 
 class _InheritedTetris extends InheritedWidget {
@@ -39,20 +40,18 @@ class TetrisControllerState extends State<TetrisController> {
   int score = 0;
   bool isTspin = false;
   bool isKept = false;
-  late Timer timer;
+  GameInfo gameInfo = GameInfo.waiting;
+  Timer? timer;
+
+  bool get isPlaying => gameInfo == GameInfo.playing;
 
   @override
   void initState() {
     init();
-    timer = Timer.periodic(
-      const Duration(milliseconds: initialDurationMillisecconds),
-      (timer) {},
-    );
     super.initState();
   }
 
   void init() {
-    currentMinoStateModel = MinoStateModel.init();
     fieldState = getInitialField();
     nextMinos.clear();
     nextMinos = setNextMinos(nextMinos: nextMinos);
@@ -60,10 +59,11 @@ class TetrisControllerState extends State<TetrisController> {
     score = 0;
     isTspin = false;
     isKept = false;
+    gameInfo = GameInfo.waiting;
   }
 
   void left() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
     final setResult = moveLeft(
@@ -80,7 +80,7 @@ class TetrisControllerState extends State<TetrisController> {
   }
 
   void right() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
     final setResult = moveRight(
@@ -97,7 +97,7 @@ class TetrisControllerState extends State<TetrisController> {
   }
 
   void down() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
 
@@ -121,7 +121,7 @@ class TetrisControllerState extends State<TetrisController> {
   }
 
   void hardDrop() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
     final loopResult = hardDropLoop(
@@ -136,7 +136,7 @@ class TetrisControllerState extends State<TetrisController> {
   }
 
   void r90() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
     final currentMino = currentMinoStateModel.config;
@@ -172,7 +172,7 @@ class TetrisControllerState extends State<TetrisController> {
   }
 
   void l90() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
     final currentMino = currentMinoStateModel.config;
@@ -245,7 +245,6 @@ class TetrisControllerState extends State<TetrisController> {
   }
 
   void start() {
-    timer.cancel();
     init();
     timer = Timer.periodic(
       const Duration(
@@ -253,14 +252,19 @@ class TetrisControllerState extends State<TetrisController> {
       ),
       (timer) => down(),
     );
+    gameInfo = GameInfo.playing;
   }
 
   void stop() {
-    timer.cancel();
+    if (timer != null && isPlaying) {
+      timer!.cancel();
+    }
+    timer!.cancel();
+    gameInfo = GameInfo.gameOver;
   }
 
   void keep() {
-    if (!timer.isActive) {
+    if (!isPlaying) {
       return;
     }
     if (isKept) {

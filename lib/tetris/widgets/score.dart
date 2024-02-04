@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../configs.dart';
 import '../feature/size_calculation/get_field_panel_size.dart';
+import '../model/enum/game_info.dart';
 import '../model/models.dart';
 import '../tetris_controller.dart';
 import 'box_title.dart';
@@ -25,14 +26,17 @@ class Score extends StatelessWidget {
             ),
             color: TetrisColors.black.color,
           ),
-          child: Center(
-            child: Text(
-              TetrisController.of(context).score.toString(),
-              style: TextStyle(
-                color: TetrisColors.white.color,
-              ),
-            ),
-          ),
+          child: TetrisController.of(context).isPlaying ||
+                  TetrisController.of(context).gameInfo == GameInfo.gameOver
+              ? Center(
+                  child: Text(
+                    TetrisController.of(context).score.toString(),
+                    style: TextStyle(
+                      color: TetrisColors.white.color,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );

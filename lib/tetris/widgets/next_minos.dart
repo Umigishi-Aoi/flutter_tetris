@@ -32,10 +32,12 @@ class NextMinos extends StatelessWidget {
                 ),
                 color: TetrisColors.black.color,
               ),
-              child: Mino(
-                minoPanel: configs.first.nextMino(),
-                panelSize: panelSize,
-              ),
+              child: TetrisController.of(context).isPlaying
+                  ? Mino(
+                      minoPanel: configs.first.nextMino(),
+                      panelSize: panelSize,
+                    )
+                  : const SizedBox.shrink(),
             ),
           ],
         ),
@@ -58,10 +60,12 @@ class NextMinos extends StatelessWidget {
               if (e.$1 == 0) {
                 return const SizedBox.shrink();
               }
-              return Mino(
-                minoPanel: e.$2.nextMino(),
-                panelSize: futurePanelSize,
-              );
+              return TetrisController.of(context).isPlaying
+                  ? Mino(
+                      minoPanel: e.$2.nextMino(),
+                      panelSize: futurePanelSize,
+                    )
+                  : const SizedBox.shrink();
             }).toList(),
           ),
         ),

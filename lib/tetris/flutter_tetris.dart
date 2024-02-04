@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'configs.dart';
 import 'model/enum/tetris_colors.dart';
 import 'tetris_controller.dart';
+import 'widgets/game_info_widget.dart';
 import 'widgets/widgets.dart';
 
 class FlutterTetris extends StatelessWidget {
@@ -35,7 +36,13 @@ class FlutterTetris extends StatelessWidget {
                                 Score(),
                               ],
                             ),
-                            Field(),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Field(),
+                                GameInfoWidget(),
+                              ],
+                            ),
                             NextMinos(),
                           ],
                         ),
