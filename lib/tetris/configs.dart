@@ -22,5 +22,7 @@ const tspinBonus = 3;
 
 const infoBoxWidth = 108.0;
 const keepMinoBoxHeight = 56.0;
+const futureMinoBoxwidth = 72.0;
+const futureMinoBoxHeight = 136.0;
 
 const infoBorderWidth = 2.0;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'model/enum/tetris_colors.dart';
 import 'tetris_controller.dart';
 import 'widgets/widgets.dart';
 
@@ -14,6 +15,7 @@ class FlutterTetris extends StatelessWidget {
           builder: (context) {
             return KeyboardInputWidget(
               child: Scaffold(
+                backgroundColor: TetrisColors.deepBlue.color,
                 body: Center(
                   child: SingleChildScrollView(
                     child: Column(

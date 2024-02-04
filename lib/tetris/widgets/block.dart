@@ -21,9 +21,7 @@ class Block extends StatelessWidget {
       decoration: BoxDecoration(
         color: panel.color.color,
         border: Border.all(
-          color: panel.color == TetrisColors.black
-              ? TetrisColors.black.color
-              : TetrisColors.white.color,
+          color: TetrisColors.black.color,
         ),
       ),
     );
