@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'configs.dart';
 import 'model/enum/tetris_colors.dart';
 import 'tetris_controller.dart';
 import 'widgets/widgets.dart';
@@ -21,12 +22,19 @@ class FlutterTetris extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Score(),
                         const Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            KeepMino(),
+                            Column(
+                              children: [
+                                KeepMino(),
+                                SizedBox(
+                                  height: spaceHeight,
+                                ),
+                                Score(),
+                              ],
+                            ),
                             Field(),
                             NextMinos(),
                           ],
