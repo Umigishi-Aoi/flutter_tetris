@@ -43,13 +43,7 @@ class TetrisControllerState extends State<TetrisController> {
   GameInfo gameInfo = GameInfo.waiting;
   Timer? timer;
 
-  bool get isPlaying {
-    if (timer == null) {
-      return false;
-    }
-
-    return timer!.isActive;
-  }
+  bool get isPlaying => gameInfo == GameInfo.playing;
 
   @override
   void initState() {
