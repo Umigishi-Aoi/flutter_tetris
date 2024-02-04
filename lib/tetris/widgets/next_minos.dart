@@ -42,7 +42,7 @@ class NextMinos extends StatelessWidget {
           ],
         ),
         const SizedBox(
-          height: spaceHeight,
+          height: spaceSize,
         ),
         Container(
           width: futurePanelSize * futureMinoBoxWidthNumber,

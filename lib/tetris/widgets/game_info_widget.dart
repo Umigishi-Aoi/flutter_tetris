@@ -23,23 +23,34 @@ class GameInfoWidget extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: ColoredBox(
-            color: TetrisColors.grey.color,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text(
-                  gameInfo.info,
-                  style: TextStyle(
-                    color: gameInfo == GameInfo.gameOver
-                        ? TetrisColors.red.color
-                        : TetrisColors.white.color,
-                    fontWeight: FontWeight.bold,
+          child: Column(
+            children: [
+              ColoredBox(
+                color: TetrisColors.grey.color,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      gameInfo.info,
+                      style: TextStyle(
+                        color: gameInfo == GameInfo.gameOver
+                            ? TetrisColors.red.color
+                            : TetrisColors.white.color,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(
+                height: spaceSize,
+              ),
+              ElevatedButton(
+                onPressed: TetrisController.of(context).start,
+                child: const Text('Start'),
+              ),
+            ],
           ),
         ),
       ),

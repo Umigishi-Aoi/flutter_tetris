@@ -7,6 +7,8 @@ const holizontalDisplayBlockNumber =
 const verticalDisplayBlockNumber = verticalBlockNumber + 1 + (4 + 1) * 2 + 1;
 const verticalFieldSizeRatio = 0.7;
 
+const controllerWidthBlockNumber = horizontalBlockNumber + 5;
+
 const futureMinoSizeRatio = 2 / 3;
 
 const verticalStartPosition = 0;
@@ -29,4 +31,4 @@ const futureMinoBoxHeightNumber = 9;
 
 const infoBorderWidth = 2.0;
 
-const spaceHeight = 16.0;
+const spaceSize = 16.0;
