@@ -1,23 +1,45 @@
 import 'package:flutter/material.dart';
 
 import '../configs.dart';
-import '../model/enum/mino_config.dart';
+import '../model/enum/tetris_colors.dart';
+import '../tetris_controller.dart';
+import 'box_title.dart';
 import 'mino.dart';
 
 class KeepMino extends StatelessWidget {
-  const KeepMino({required this.config, super.key});
-
-  final MinoConfig? config;
+  const KeepMino({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final config = TetrisController.of(context).keepMino;
+
     return Column(
       children: [
-        const SizedBox(
-          height: panelSize * notShowMinoVerticalNumber,
-          width: panelSize * 4,
+        const BoxTitle(title: 'KEEP'),
+        Container(
+          width: infoBoxWidth,
+          height: keepMinoBoxHeight,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: TetrisColors.grey.color,
+              width: infoBorderWidth,
+            ),
+            color: TetrisColors.black.color,
+          ),
+          child: Center(
+            child: Builder(
+              builder: (context) {
+                if (config == null) {
+                  return Container();
+                }
+                return Mino(
+                  minoPanel: config.nextMino(),
+                  panelSize: fieldPanelSize,
+                );
+              },
+            ),
+          ),
         ),
-        if (config != null) Mino(minoPanel: config!.nextMino()),
       ],
     );
   }

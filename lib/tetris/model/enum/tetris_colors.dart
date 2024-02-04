@@ -11,7 +11,8 @@ enum TetrisColors {
   red(color: Color(0xffff0000)),
   blue(color: Color(0xff0000ff)),
   orange(color: Color(0xffff7f00)),
-  transparent(color: Color(0x00000000));
+  transparent(color: Color(0x00000000)),
+  deepBlue(color: Color(0xff004b8b));
 
   const TetrisColors({
     required this.color,

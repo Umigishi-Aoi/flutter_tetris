@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'configs.dart';
+import 'model/enum/tetris_colors.dart';
 import 'tetris_controller.dart';
 import 'widgets/widgets.dart';
 
@@ -13,35 +15,28 @@ class FlutterTetris extends StatelessWidget {
         home: Builder(
           builder: (context) {
             return KeyboardInputWidget(
-              start: TetrisController.of(context).start,
-              right: TetrisController.of(context).right,
-              left: TetrisController.of(context).left,
-              down: TetrisController.of(context).down,
-              r90: TetrisController.of(context).r90,
-              l90: TetrisController.of(context).l90,
-              keep: TetrisController.of(context).keep,
-              hardDrop: TetrisController.of(context).hardDrop,
               child: Scaffold(
+                backgroundColor: TetrisColors.deepBlue.color,
                 body: Center(
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Score(score: TetrisController.of(context).score),
-                        Row(
+                        const Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            KeepMino(
-                              config: TetrisController.of(context).keepMino,
+                            Column(
+                              children: [
+                                KeepMino(),
+                                SizedBox(
+                                  height: spaceHeight,
+                                ),
+                                Score(),
+                              ],
                             ),
-                            Field(
-                              fieldState:
-                                  TetrisController.of(context).fieldState,
-                            ),
-                            NextMinos(
-                              configs: TetrisController.of(context).nextMinos,
-                            ),
+                            Field(),
+                            NextMinos(),
                           ],
                         ),
                         ElevatedButton(

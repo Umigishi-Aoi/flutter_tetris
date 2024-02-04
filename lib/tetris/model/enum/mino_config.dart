@@ -186,31 +186,30 @@ enum MinoConfig {
     return switch (this) {
       i => [
           [pI, pI, pI, pI],
-          [n, n, n, n],
         ],
       o => [
-          [n, pO, pO, n],
-          [n, pO, pO, n],
+          [pO, pO],
+          [pO, pO],
         ],
       t => [
-          [n, pT, n, n],
-          [pT, pT, pT, n],
+          [n, pT, n],
+          [pT, pT, pT],
         ],
       s => [
-          [n, pS, pS, n],
-          [pS, pS, n, n],
+          [n, pS, pS],
+          [pS, pS, n],
         ],
       z => [
-          [pZ, pZ, n, n],
-          [n, pZ, pZ, n],
+          [pZ, pZ, n],
+          [n, pZ, pZ],
         ],
       j => [
-          [pJ, n, n, n],
-          [pJ, pJ, pJ, n],
+          [pJ, n, n],
+          [pJ, pJ, pJ],
         ],
       l => [
-          [n, n, pL, n],
-          [pL, pL, pL, n],
+          [n, n, pL],
+          [pL, pL, pL],
         ],
     };
   }
