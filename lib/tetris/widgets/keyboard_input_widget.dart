@@ -24,7 +24,7 @@ class KeyboardInputWidget extends StatelessWidget {
         LogicalKeySet(LogicalKeyboardKey.keyX): const R90Intent(),
         LogicalKeySet(LogicalKeyboardKey.keyZ): const L90Intent(),
         LogicalKeySet(LogicalKeyboardKey.keyC): const KeepIntent(),
-        LogicalKeySet(LogicalKeyboardKey.space): const HardDropIntent(),
+        LogicalKeySet(LogicalKeyboardKey.arrowUp): const HardDropIntent(),
       },
       child: Actions(
         actions: <Type, Action<Intent>>{

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'configs.dart';
 import 'model/enum/tetris_colors.dart';
 import 'tetris_controller.dart';
-import 'widgets/controll_info.dart';
+import 'widgets/buttons.dart';
 import 'widgets/game_info_widget.dart';
 import 'widgets/widgets.dart';
 
@@ -14,7 +14,14 @@ class FlutterTetris extends StatelessWidget {
   Widget build(BuildContext context) {
     return TetrisController(
       child: MaterialApp(
-        theme: ThemeData(colorSchemeSeed: TetrisColors.deepBlue.color),
+        theme: ThemeData(
+          colorSchemeSeed: TetrisColors.deepBlue.color,
+          elevatedButtonTheme: const ElevatedButtonThemeData(
+            style: ButtonStyle(
+              shape: MaterialStatePropertyAll(LinearBorder.none),
+            ),
+          ),
+        ),
         home: Builder(
           builder: (context) {
             return KeyboardInputWidget(
@@ -32,7 +39,7 @@ class FlutterTetris extends StatelessWidget {
                             children: [
                               KeepMino(),
                               SizedBox(
-                                height: spaceHeight,
+                                height: spaceSize,
                               ),
                               Score(),
                             ],
@@ -47,7 +54,10 @@ class FlutterTetris extends StatelessWidget {
                           NextMinos(),
                         ],
                       ),
-                      ControllInfo(),
+                      SizedBox(
+                        height: spaceSize,
+                      ),
+                      Buttons(),
                     ],
                   ),
                 ),

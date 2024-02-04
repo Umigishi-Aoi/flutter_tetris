@@ -31,4 +31,4 @@ const futureMinoBoxHeightNumber = 9;
 
 const infoBorderWidth = 2.0;
 
-const spaceHeight = 16.0;
+const spaceSize = 16.0;
