@@ -38,9 +38,8 @@ class TetrisControllerState extends State<TetrisController> {
   MinoConfig? keepMino;
   int score = 0;
   bool isTspin = false;
+  bool isKept = false;
   late Timer timer;
-
-  bool get isKept => currentMinoStateModel.config == keepMino;
 
   @override
   void initState() {
@@ -60,6 +59,7 @@ class TetrisControllerState extends State<TetrisController> {
     keepMino = null;
     score = 0;
     isTspin = false;
+    isKept = false;
   }
 
   void left() {
@@ -115,6 +115,7 @@ class TetrisControllerState extends State<TetrisController> {
     } else {
       deletePanels();
       isTspin = false;
+      isKept = false;
       add();
     }
   }
@@ -293,6 +294,7 @@ class TetrisControllerState extends State<TetrisController> {
         nextMinos.removeAt(0);
         nextMinos = setNextMinos(nextMinos: nextMinos);
       }
+      isKept = true;
     }
   }
 
