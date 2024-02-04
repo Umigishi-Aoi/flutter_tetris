@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../configs.dart';
+import '../feature/size_calculation/get_field_panel_size.dart';
+import '../feature/size_calculation/get_future_mino_size.dart';
 import '../model/enum/tetris_colors.dart';
 import '../tetris_controller.dart';
 import 'box_title.dart';
@@ -11,6 +13,9 @@ class NextMinos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final configs = TetrisController.of(context).nextMinos;
+
+    final panelSize = getFieldPanelSize(context);
+    final futurePanelSize = getFutureMinoSize(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,8 +23,8 @@ class NextMinos extends StatelessWidget {
           children: [
             const BoxTitle(title: 'NEXT'),
             Container(
-              width: infoBoxWidth,
-              height: keepMinoBoxHeight,
+              width: panelSize * infoBoxWidthNumber,
+              height: panelSize * infoBoxHeightNumber,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: TetrisColors.grey.color,
@@ -29,7 +34,7 @@ class NextMinos extends StatelessWidget {
               ),
               child: Mino(
                 minoPanel: configs.first.nextMino(),
-                panelSize: fieldPanelSize,
+                panelSize: panelSize,
               ),
             ),
           ],
@@ -38,8 +43,8 @@ class NextMinos extends StatelessWidget {
           height: spaceHeight,
         ),
         Container(
-          width: futureMinoBoxwidth,
-          height: futureMinoBoxHeight,
+          width: futurePanelSize * futureMinoBoxWidthNumber,
+          height: futurePanelSize * futureMinoBoxHeightNumber,
           decoration: BoxDecoration(
             border: Border.all(
               color: TetrisColors.grey.color,
@@ -53,7 +58,10 @@ class NextMinos extends StatelessWidget {
               if (e.$1 == 0) {
                 return const SizedBox.shrink();
               }
-              return Mino(minoPanel: e.$2.nextMino(), panelSize: infoPanelSize);
+              return Mino(
+                minoPanel: e.$2.nextMino(),
+                panelSize: futurePanelSize,
+              );
             }).toList(),
           ),
         ),

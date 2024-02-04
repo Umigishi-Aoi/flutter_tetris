@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../configs.dart';
+import '../feature/size_calculation/get_field_panel_size.dart';
 import '../tetris_controller.dart';
 import 'block.dart';
 
@@ -23,7 +24,7 @@ class Field extends StatelessWidget {
                 .map(
                   (panel) => Block(
                     panel: panel,
-                    panelSize: fieldPanelSize,
+                    panelSize: getFieldPanelSize(context),
                   ),
                 )
                 .toList(),
