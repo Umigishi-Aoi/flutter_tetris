@@ -2,8 +2,12 @@
 const horizontalBlockNumber = 8;
 const verticalBlockNumber = 15 + notShowMinoVerticalNumber;
 
-const fieldPanelSize = 24.0;
-const infoPanelSize = 16.0;
+const holizontalDisplayBlockNumber =
+    horizontalBlockNumber + 2 + (4 + 1) * 2 + 1;
+const verticalDisplayBlockNumber = verticalBlockNumber + 1 + (4 + 1) * 2 + 1;
+const verticalFieldSizeRatio = 0.7;
+
+const futureMinoSizeRatio = 2 / 3;
 
 const verticalStartPosition = 0;
 const horizontalStartPosition = 3;
@@ -14,16 +18,14 @@ const notShowMinoVerticalNumber = 3;
 
 const initialDurationMillisecconds = 1000;
 
-const scoreHeight = 16.0;
-
 const scoreUnit = 100;
 
 const tspinBonus = 3;
 
-const infoBoxWidth = 108.0;
-const keepMinoBoxHeight = 56.0;
-const futureMinoBoxwidth = 72.0;
-const futureMinoBoxHeight = 136.0;
+const infoBoxWidthNumber = 5;
+const infoBoxHeightNumber = 3;
+const futureMinoBoxWidthNumber = 5;
+const futureMinoBoxHeightNumber = 9;
 
 const infoBorderWidth = 2.0;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../configs.dart';
+import '../feature/size_calculation/get_field_panel_size.dart';
 import '../model/models.dart';
 import '../tetris_controller.dart';
 import 'box_title.dart';
@@ -10,12 +11,13 @@ class Score extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final panelSize = getFieldPanelSize(context);
     return Column(
       children: [
         const BoxTitle(title: 'SCORE'),
         Container(
-          width: infoBoxWidth,
-          height: keepMinoBoxHeight,
+          width: panelSize * infoBoxWidthNumber,
+          height: panelSize * infoBoxHeightNumber,
           decoration: BoxDecoration(
             border: Border.all(
               color: TetrisColors.grey.color,

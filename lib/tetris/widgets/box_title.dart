@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../configs.dart';
+import '../feature/size_calculation/get_field_panel_size.dart';
 import '../model/enum/tetris_colors.dart';
 
 class BoxTitle extends StatelessWidget {
@@ -11,7 +12,7 @@ class BoxTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: infoBoxWidth,
+      width: getFieldPanelSize(context) * infoBoxWidthNumber,
       decoration: BoxDecoration(
         border: Border.all(
           color: TetrisColors.grey.color,
